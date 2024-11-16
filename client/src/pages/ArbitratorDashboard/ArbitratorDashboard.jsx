@@ -119,9 +119,9 @@ const ArbitratorDashboard = () => {
             }
           })
           .map((arbitratior) => (
-            <>
-              <tbody>
-                <tr className={styles.trbody} key={arbitratior._id}>
+            
+              <tbody key={arbitratior._id}>
+                <tr className={styles.trbody}>
                   <td data-label="ID">{arbitratior._id?.slice(0, 5)}</td>
                   <td data-label="Name">{arbitratior.name}</td>
                   <td data-label="Contact No." className={styles.number}>
@@ -139,7 +139,7 @@ const ArbitratorDashboard = () => {
                   </td>
                 </tr>
               </tbody>
-            </>
+            
           ))}
       </table>
     </>
