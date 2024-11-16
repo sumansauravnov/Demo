@@ -13,7 +13,7 @@ table {
 
 th,
 td {
-  padding: 15px;
+  padding: 8px;
 }
 
 tr > th {
@@ -25,9 +25,7 @@ tr > th {
   background-color: #eef3fe;
 }
 tbody tr {
-  border: 2px solid red;
-  border-radius: 0px;
-  box-shadow: 0 0 0 2px grey;
+  box-shadow: 0 0 0 1px grey;
 }
 
 .number {
