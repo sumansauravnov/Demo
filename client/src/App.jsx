@@ -12,6 +12,7 @@ import AddArbitrator from "./pages/AdminDashboard/ArbitratorDashboard/addArbitra
 import AddClient from "./pages/AdminDashboard/ClientDashboard/addClient";
 import ClientMain from "./pages/clinetMainPage/ClientMain";
 import ArbitratorMain from "./pages/arbitratorMainPage/ArbitratorMain";
+import Uploadcase from "./pages/AdminDashboard/UploadCases/Uploadcase";
 
 function App() {
   return (
@@ -55,6 +56,7 @@ function App() {
                       element={<AddArbitrator />}
                     />
                     <Route path="/client/addclient" element={<AddClient />} />
+                    <Route path="/client/cases" element={<Uploadcase />} />
                   </Routes>
                 </div>
               </div>
