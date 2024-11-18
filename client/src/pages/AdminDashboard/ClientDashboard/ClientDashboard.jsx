@@ -42,152 +42,158 @@ const ClientDashboard = () => {
   }, []);
 
   return (
-    <>
-      <div className="w-[90%] flex justify-between mt-8 ml-12">
-        <h1 className="text-[24px] font-bold">
-          User {">"} {">"} Client
-        </h1>
-
-        <div className="bg-[#dcedfd] p-2 rounded-full">
-          <LuUser className="text-xl" />
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-6xl mx-auto px-4 py-3">
+        <div className=" flex justify-between items-center mb-4 bg-white p-2 rounded-lg shadow-sm">
+          <div className="flex items-center space-x-2">
+            {/* <h1 className="text-2xl font-bold text-gray-800">Add Arbitrator</h1> */}
+            <div className="text-sm text-gray-500 flex items-center space-x-2">
+              <span className="cursor-pointer hover:text-blue-700 font-semibold">User</span>
+              <span>›</span>
+              <span className="cursor-pointer hover:text-blue-700 font-semibold">Client</span>
+            </div>
+          </div>
+          <div className="bg-blue-50 p-3 rounded-full">
+            <LuUser className="text-blue-600 text-xl" />
+          </div>
         </div>
-      </div>
 
-      {/* Search button */}
-      {data.length == 0 ? (
-        ""
-      ) : (
-        <div className="w-[80%] ml-12 mt-10 flex gap-8">
-          <div className="w-[30%] flex items-center border rounded-md p-1 bg-blue-50 border-1 border-black">
-            <input
-              type="text"
-              placeholder="Search here"
-              className="flex-grow outline-none bg-transparent px-2 py-0.5 text-sm"
-              onChange={(e) => setSearchdata(e.target.value)}
-            />
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 text-gray-500"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
+        {/* Search button */}
+        {data.length == 0 ? (
+          ""
+        ) : (
+          <div className="w-[80%] ml-2 mt-10 flex gap-8">
+            <div className="w-[30%] flex items-center border rounded-md p-1 bg-blue-50 border-1 border-black">
+              <input
+                type="text"
+                placeholder="Search here"
+                className="flex-grow outline-none bg-transparent px-2 py-0.5 text-sm"
+                onChange={(e) => setSearchdata(e.target.value)}
+              />
+              <button>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 text-gray-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 21l-4.35-4.35M17.5 10.5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <div className="relative">
+              <button
+                onClick={() => setIsStatusOpen(!isStatusOpen)}
+                className="flex items-center justify-between w-32 px-4 py-1 bg-blue-50 rounded hover:bg-blue-100 transition-colors"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-4.35-4.35M17.5 10.5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </button>
-          </div>
+                <span>{selectedStatus}</span>
+                {isStatusOpen ? (
+                  <ChevronUp className="w-4 h-4" />
+                ) : (
+                  <ChevronDown className="w-4 h-4" />
+                )}
+              </button>
 
-          <div className="relative">
-            <button
-              onClick={() => setIsStatusOpen(!isStatusOpen)}
-              className="flex items-center justify-between w-32 px-4 py-1 bg-blue-50 rounded hover:bg-blue-100 transition-colors"
-            >
-              <span>{selectedStatus}</span>
-              {isStatusOpen ? (
-                <ChevronUp className="w-4 h-4" />
-              ) : (
-                <ChevronDown className="w-4 h-4" />
+              {isStatusOpen && (
+                <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded shadow-lg">
+                  {statusOptions.map((option) => (
+                    <div
+                      key={option.value}
+                      className="px-4 py-2 hover:bg-blue-50 cursor-pointer"
+                      onClick={() =>
+                        handleStatusSelect(option.value, option.label)
+                      }
+                    >
+                      {option.label}
+                    </div>
+                  ))}
+                </div>
               )}
-            </button>
-
-            {isStatusOpen && (
-              <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded shadow-lg">
-                {statusOptions.map((option) => (
-                  <div
-                    key={option.value}
-                    className="px-4 py-2 hover:bg-blue-50 cursor-pointer"
-                    onClick={() =>
-                      handleStatusSelect(option.value, option.label)
-                    }
-                  >
-                    {option.label}
-                  </div>
-                ))}
-              </div>
-            )}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Add Arbitrator */}
-      <div className="flex justify-end w-[90%] mx-auto mt-10">
-        <button className="bg-[#B9DCFD] hover:bg-blue-500 font-semibold text-[16px] p-2 text-black py-2 px-4 flex items-center gap-0 border-1 border-slate-950">
+        {/* Add Arbitrator */}
+        <div className="flex justify-end w-[97%] mx-auto mt-6">
           <Link to={"/client/addclient"}>
-            <span>Add</span>
+            <button className="bg-[#B9DCFD] hover:bg-blue-500 font-semibold text-[16px] p-2 text-black py-2 px-4 flex items-center gap-0 border-1 border-slate-950">
+              <span>Add</span>
+            </button>
           </Link>
-        </button>
+        </div>
+
+        {/* Table Data */}
+
+        {data.length > 0 ? (
+          <table cellSpacing="0">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Contact No.</th>
+                <th>Email ID</th>
+                <th>Cases Added</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            {data
+              .filter((item) => {
+                if (item === "All") {
+                  return item;
+                } else if (
+                  item.name.toLowerCase().includes(searchdata.toLowerCase()) ||
+                  item.contactNo
+                    .toLowerCase()
+                    .includes(searchdata.toLowerCase()) ||
+                  item.emailId.toLowerCase().includes(searchdata.toLowerCase())
+                ) {
+                  return item;
+                }
+              })
+              .filter((stat) => {
+                if (filterstatus == "all") {
+                  return stat;
+                } else if (filterstatus == "active") {
+                  return stat.status == true;
+                } else {
+                  return stat.status == false;
+                }
+              })
+              .map((arbitratior) => (
+                <tbody key={arbitratior._id}>
+                  <tr className={styles.trbody}>
+                    <td data-label="ID">{arbitratior._id?.slice(0, 5)}</td>
+                    <td data-label="Name">{arbitratior.name}</td>
+                    <td data-label="Contact No." className={styles.number}>
+                      {arbitratior.contactNo}
+                    </td>
+                    <td data-label="Email ID">{arbitratior.emailId}</td>
+                    <td data-label="No. of assign Case">
+                      {arbitratior.caseAdded}
+                    </td>
+                    <td data-label="Status" className={styles.status}>
+                      {arbitratior.status == false ? "InActive" : "Active"}
+                    </td>
+                    <td data-label="Action">
+                      <FiEdit3 style={{ color: "blue", fontSize: "24px" }} />
+                    </td>
+                  </tr>
+                </tbody>
+              ))}
+          </table>
+        ) : (
+          <NoDataFound />
+        )}
       </div>
-
-      {/* Table Data */}
-
-      {data.length > 0 ? (
-        <table cellSpacing="0">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Contact No.</th>
-              <th>Email ID</th>
-              <th>Cases Added</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          {data
-            .filter((item) => {
-              if (item === "All") {
-                return item;
-              } else if (
-                item.name.toLowerCase().includes(searchdata.toLowerCase()) ||
-                item.contactNo
-                  .toLowerCase()
-                  .includes(searchdata.toLowerCase()) ||
-                item.emailId.toLowerCase().includes(searchdata.toLowerCase())
-              ) {
-                return item;
-              }
-            })
-            .filter((stat) => {
-              if (filterstatus == "all") {
-                return stat;
-              } else if (filterstatus == "active") {
-                return stat.status == true;
-              } else {
-                return stat.status == false;
-              }
-            })
-            .map((arbitratior) => (
-              <tbody key={arbitratior._id}>
-                <tr className={styles.trbody}>
-                  <td data-label="ID">{arbitratior._id?.slice(0, 5)}</td>
-                  <td data-label="Name">{arbitratior.name}</td>
-                  <td data-label="Contact No." className={styles.number}>
-                    {arbitratior.contactNo}
-                  </td>
-                  <td data-label="Email ID">{arbitratior.emailId}</td>
-                  <td data-label="No. of assign Case">
-                    {arbitratior.caseAdded}
-                  </td>
-                  <td data-label="Status" className={styles.status}>
-                    {arbitratior.status == false ? "InActive" : "Active"}
-                  </td>
-                  <td data-label="Action">
-                    <FiEdit3 style={{ color: "blue", fontSize: "24px" }} />
-                  </td>
-                </tr>
-              </tbody>
-            ))}
-        </table>
-      ) : (
-        <NoDataFound />
-      )}
-    </>
+    </div>
   );
 };
 
