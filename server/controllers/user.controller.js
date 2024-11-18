@@ -14,7 +14,8 @@ const handleAuthSignup = async (req, res) => {
     role,
     areaOfExpertise,
     experienceInYears,
-    about
+    about,
+    uid
   } = req.body;
   try {
     const hash = await argon2.hash(password);
@@ -29,7 +30,8 @@ const handleAuthSignup = async (req, res) => {
       role,
       areaOfExpertise,
       experienceInYears,
-      about
+      about,
+      uid
     });
     if (!newUser) {
       return res.status(500).json({ message: "Internel error" });

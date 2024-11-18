@@ -36,6 +36,10 @@ tbody tr {
 .status {
   color: green;
 }
+
+.status2 {
+  color: red;
+}
 .buttonAdd{
     background-color: blue;
     font-size: 30px;
