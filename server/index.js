@@ -6,6 +6,7 @@ const { userRoute } = require("./routes/user.route");
 const { resetPasswordRoute } = require("./routes/resetpassword.route");
 const { arbitratorRoute } = require("./routes/arbitrator.route");
 const { clientRoute } = require("./routes/client.route");
+const { uidRoute } = require("./routes/uid.route");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use("/auth", userRoute);
 app.use("/resetpassword", resetPasswordRoute);
 app.use("/arbitrator", arbitratorRoute)
 app.use("/client", clientRoute)
+app.use("/autouid", uidRoute)
 
 const port = process.env.PORT;
 

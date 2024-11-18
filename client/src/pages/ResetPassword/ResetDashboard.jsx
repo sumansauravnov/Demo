@@ -55,7 +55,7 @@ export const ResetDashboard = () => {
               className="px-2 py-1 rounded-md placeholder:text-sm"
               type="text"
               id="email"
-              placeholder="Lovechhokra@gmail.com"
+              placeholder="Enter email"
               value={email}
               onInput={(e) => setEmail(e.target.value)}
             />

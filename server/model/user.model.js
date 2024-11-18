@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema(
     contactNo: {
       type: String,
       require: true,
+      default: "",
     },
     emailId: {
       type: String,
@@ -32,12 +33,30 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       require: true,
+      default: "",
     },
     role: {
       type: String,
       require: true,
       enum: ["admin", "client", "arbitrator"],
       default: "client",
+    },
+    areaOfExpertise: {
+      type: String,
+      default: "",
+    },
+    experienceInYears: {
+      type: Number,
+      default: 0,
+    },
+    uid: {
+      type: String,
+      unique: true,
+      require: true,
+    },
+    about: {
+      type: String,
+      default: "",
     },
   },
   { timestamps: true }
