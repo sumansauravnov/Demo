@@ -11,7 +11,7 @@ const Sidebar = () => {
     <div className="h-screen w-48 bg-blue-50 flex flex-col justify-between">
       {/* Top Section */}
       <div>
-        <ul className="mt-14 p-5">
+        <ul className="mt-8 p-5">
           <Link to="/admin">
             <li className="text-md text-bold px-4 py-2 hover:bg-blue-100 cursor-pointer">
               Dashboard
