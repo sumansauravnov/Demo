@@ -41,7 +41,9 @@ const AddClient = () => {
       experienceInYears: parseInt(formData.experience),
       about: formData.about,
       role: "client",
+      uid: formData.uid,
     };
+    console.log(obj)
     if (
       !obj.name ||
       !obj.emailId ||

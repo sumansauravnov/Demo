@@ -7,7 +7,52 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import NoDataFound from "@/components/NoDataFound";
 
+
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import toast from "react-hot-toast";
+
 const ClientDashboard = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [editData, setEditData] = useState(null);
+
+  const handleOpen = (arbitratior) => {
+    setIsOpen(true);
+    setEditData(arbitratior);
+  };
+  const handleClose = () => {
+    console.log(editData);
+    axios
+      .put(`http://localhost:3000/client/update/${editData._id}`, editData)
+      .then((res) => {
+        setIsOpen(false);
+        getData();
+      })
+      .catch((err) => {
+        toast.error("Something went wrong");
+      });
+    // setIsOpen(false);
+  };
   const [data, setData] = useState([]);
   const [searchdata, setSearchdata] = useState("");
   const [filterstatus, setFilterstatus] = useState("all");
@@ -171,7 +216,7 @@ const ClientDashboard = () => {
               .map((arbitratior) => (
                 <tbody key={arbitratior._id}>
                   <tr className={styles.trbody}>
-                    <td data-label="ID">{arbitratior._id?.slice(0, 5)}</td>
+                    <td data-label="ID">{arbitratior.uid}</td>
                     <td data-label="Name">{arbitratior.name}</td>
                     <td data-label="Contact No." className={styles.number}>
                       {arbitratior.contactNo}
@@ -180,11 +225,18 @@ const ClientDashboard = () => {
                     <td data-label="No. of assign Case">
                       {arbitratior.caseAdded}
                     </td>
-                    <td data-label="Status" className={styles.status}>
+                    <td data-label="Status" className={arbitratior.status == true ? styles.status : styles.status2}>
                       {arbitratior.status == false ? "InActive" : "Active"}
                     </td>
                     <td data-label="Action">
-                      <FiEdit3 style={{ color: "blue", fontSize: "24px" }} />
+                    <FiEdit3
+                        style={{
+                          color: "blue",
+                          fontSize: "24px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => handleOpen(arbitratior)}
+                      />
                     </td>
                   </tr>
                 </tbody>
@@ -194,6 +246,97 @@ const ClientDashboard = () => {
           <NoDataFound />
         )}
       </div>
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Edit Clinet</DialogTitle>
+            <DialogDescription>
+              Make changes to client profile. Click save when you're done.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="uid" className="text-right">
+                ID
+              </Label>
+              <Input
+                id="uid"
+                value={editData?.uid}
+                onInput={(e) => setEditData((editData.uid = e.target.value))}
+                className="col-span-3"
+                disabled={true}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Name
+              </Label>
+              <Input
+                id="name"
+                value={editData?.name}
+                onInput={(e) => setEditData((editData.name = e.target.value))}
+                className="col-span-3"
+                disabled={true}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="contactNo" className="text-right">
+                Contact No.
+              </Label>
+              <Input
+                id="contactNo"
+                value={editData?.contactNo}
+                onInput={(e) =>
+                  setEditData((editData.contactNo = e.target.value))
+                }
+                className="col-span-3"
+                disabled={true}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="emailId" className="text-right">
+                Email
+              </Label>
+              <Input
+                id="emailId"
+                value={editData?.emailId}
+                onInput={(e) =>
+                  setEditData((editData.emailId = e.target.value))
+                }
+                className="col-span-3"
+                disabled={true}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="status" className="text-right">
+                Status
+              </Label>
+              <Select
+                id="status"
+                onValueChange={(value) =>
+                  setEditData({ ...editData, status: value === "active" })
+                }
+              >
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Status" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="inactive">Inactive</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button type="submit" onClick={handleClose}>
+              Save changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

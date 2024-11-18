@@ -41,7 +41,9 @@ const AddArbitrator = () => {
       experienceInYears: parseInt(formData.experience),
       about: formData.about,
       role: "arbitrator",
+      uid: formData.uid,
     };
+    console.log(obj)
     if (
       !obj.name ||
       !obj.emailId ||
