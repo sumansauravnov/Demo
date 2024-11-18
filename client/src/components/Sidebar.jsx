@@ -3,7 +3,6 @@ import { useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-
 const Sidebar = () => {
   // Add state for dropdown
   const [isUsersOpen, setIsUsersOpen] = useState(false);
@@ -13,38 +12,57 @@ const Sidebar = () => {
       {/* Top Section */}
       <div>
         <ul className="mt-14 p-5">
-        <Link to="/admin">
-          <li className="text-md text-bold px-4 py-2 hover:bg-blue-100 cursor-pointer">Dashboard</li>
-        </Link>
-          <li 
+          <Link to="/admin">
+            <li className="text-md text-bold px-4 py-2 hover:bg-blue-100 cursor-pointer">
+              Dashboard
+            </li>
+          </Link>
+          <li
             className="text-md px-4 py-2 hover:bg-blue-100 cursor-pointer flex items-center justify-between"
             onClick={() => setIsUsersOpen(!isUsersOpen)}
           >
             <span>Users</span>
-            <span className={`transform transition-transform ${isUsersOpen ? 'rotate-90' : ''}`}>
-            <FaArrowRight />
+            <span
+              className={`transform transition-transform ${
+                isUsersOpen ? "rotate-90" : ""
+              }`}
+            >
+              <FaArrowRight />
             </span>
           </li>
-         
+
           {isUsersOpen && (
             <div>
               <ul className="ml-4 mt-1">
-              <Link to="/arbitrator">
-                <li className="text-sm px-4 py-1 hover:bg-blue-100 cursor-pointer">Arbitrator</li>
-              </Link>
+                <Link to="/arbitratortable">
+                  <li className="text-sm px-4 py-1 hover:bg-blue-100 cursor-pointer">
+                    Arbitrator
+                  </li>
+                </Link>
 
-              <Link to="/client">
-
-                <li className="text-sm px-4 py-1 hover:bg-blue-100 cursor-pointer">Client</li>
-              </Link>
+                <Link to="/clienttable">
+                  <li className="text-sm px-4 py-1 hover:bg-blue-100 cursor-pointer">
+                    Client
+                  </li>
+                </Link>
               </ul>
             </div>
           )}
-          <li className="text-sm px-4 py-2 hover:bg-blue-100 cursor-pointer">Cases</li>
-          <li className="text-sm px-4 py-2 hover:bg-blue-100 cursor-pointer">Meetings</li>
-          <li className="text-sm px-4 py-2 hover:bg-blue-100 cursor-pointer">Documents</li>
-          <li className="text-sm px-4 py-2 hover:bg-blue-100 cursor-pointer">Tickets</li>
-          <li className="text-sm px-4 py-2 hover:bg-blue-100 cursor-pointer">Consultation Requests</li>
+          <li className="text-sm px-4 py-2 hover:bg-blue-100 cursor-pointer">
+            Cases
+          </li>
+          <li className="text-sm px-4 py-2 hover:bg-blue-100 cursor-pointer">
+            Meetings
+          </li>
+          <li className="text-sm px-4 py-2 hover:bg-blue-100 cursor-pointer">
+            Documents
+          </li>
+          <li className="text-sm px-4 py-2 hover:bg-blue-100 cursor-pointer">
+            Tickets
+          </li>
+          <li className="text-sm px-4 py-2 hover:bg-blue-100 cursor-pointer">
+            Consultation Requests
+          </li>
         </ul>
       </div>
 

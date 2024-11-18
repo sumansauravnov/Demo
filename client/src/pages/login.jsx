@@ -26,7 +26,7 @@ export const Login = () => {
   }
 
   return (
-    <div className="flex justify-center lg:justify-between p-[34px] min-h-[100vh] min-w-[98vw] bg-[#d4e1ea]">
+    <div className="flex justify-center lg:justify-between p-[34px] min-h-[100vh] min-w-[100vw] bg-[#d4e1ea]">
       <div className="max-h-[480px] relative w-[400px] shadow-lg flex flex-col items-center  px-12 py-4 rounded-3xl bg-white bg-opacity-60">
         <h2 className="text-2xl font-bold mb-7">
           {client ? "Login" : "Admin Login"}
@@ -40,7 +40,7 @@ export const Login = () => {
               className="px-2 py-1 rounded-md placeholder:text-sm"
               type="email"
               id="email"
-              placeholder="Lovechhokra@gmail.com"
+              placeholder="Enter email"
             />
           </div>
           <div className="flex flex-col gap-2">

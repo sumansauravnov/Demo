@@ -1,18 +1,19 @@
-import styles from "./ArbitratorDashboard.module.css";
+import styles from "../ArbitratorDashboard/ArbitratorDashboard.module.css";
 import { FiEdit3 } from "react-icons/fi";
 // import { FaRegCircleUser } from "react-icons/fa6";
 import { LuUser } from "react-icons/lu";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
-const ArbitratorDashboard = () => {
+const ClientDashboard = () => {
   const [data, setData] = useState([]);
   const [searchdata, setSearchdata] = useState("");
   const [filterstatus, setFilterstatus] = useState("all");
 
   const getData = () => {
     axios
-      .get("http://localhost:3000/arbitrator/all")
+      .get("http://localhost:3000/client/all")
       .then((res) => {
         console.log(res.data.user);
         setData(res.data.user);
@@ -29,8 +30,9 @@ const ArbitratorDashboard = () => {
     <>
       <div className="w-[90%] flex justify-between mt-8 ml-12">
         <h1 className="text-[24px] font-bold">
-          User {">"} {">"} Arbitrator
+          User {">"} {">"} Client
         </h1>
+
         <div className="bg-[#dcedfd] p-2 rounded-full">
           <LuUser className="text-xl" />
         </div>
@@ -62,7 +64,6 @@ const ArbitratorDashboard = () => {
             </svg>
           </button>
         </div>
-
         <div>
           <select
             className="px-4 py-1 bg-blue-50 rounded"
@@ -78,7 +79,9 @@ const ArbitratorDashboard = () => {
       {/* Add Arbitrator */}
       <div className="flex justify-end w-[90%] mx-auto mt-10">
         <button className="bg-[#B9DCFD] hover:bg-blue-500 font-semibold text-[16px] p-2 text-black py-2 px-4 flex items-center gap-0 border-1 border-slate-950">
-          <span>Add</span>
+        <Link to={"/client/addclient"}>
+            <span>Add</span>
+          </Link>
         </button>
       </div>
 
@@ -91,7 +94,7 @@ const ArbitratorDashboard = () => {
             <th>Name</th>
             <th>Contact No.</th>
             <th>Email ID</th>
-            <th>No. of assign Case</th>
+            <th>Cases Added</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -109,17 +112,15 @@ const ArbitratorDashboard = () => {
             }
           })
           .filter((stat) => {
-            if (filterstatus=="all"){
-              return stat
-            }
-            else if (filterstatus=="active"){
-              return stat.status==true
-            }else{
-              return stat.status==false
+            if (filterstatus == "all") {
+              return stat;
+            } else if (filterstatus == "active") {
+              return stat.status == true;
+            } else {
+              return stat.status == false;
             }
           })
           .map((arbitratior) => (
-            
               <tbody key={arbitratior._id}>
                 <tr className={styles.trbody}>
                   <td data-label="ID">{arbitratior._id?.slice(0, 5)}</td>
@@ -129,7 +130,7 @@ const ArbitratorDashboard = () => {
                   </td>
                   <td data-label="Email ID">{arbitratior.emailId}</td>
                   <td data-label="No. of assign Case">
-                    {arbitratior.noOfAssignCase}
+                    {arbitratior.caseAdded}
                   </td>
                   <td data-label="Status" className={styles.status}>
                     {arbitratior.status == false ? "InActive" : "Active"}
@@ -139,11 +140,10 @@ const ArbitratorDashboard = () => {
                   </td>
                 </tr>
               </tbody>
-            
           ))}
       </table>
     </>
   );
 };
 
-export default ArbitratorDashboard;
+export default ClientDashboard;

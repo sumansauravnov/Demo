@@ -1,18 +1,33 @@
-import styles from "../ArbitratorDashboard/ArbitratorDashboard.module.css";
+import styles from "./ArbitratorDashboard.module.css";
 import { FiEdit3 } from "react-icons/fi";
-// import { FaRegCircleUser } from "react-icons/fa6";
 import { LuUser } from "react-icons/lu";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
-const ClientDashboard = () => {
+const ArbitratorDashboard = () => {
   const [data, setData] = useState([]);
   const [searchdata, setSearchdata] = useState("");
   const [filterstatus, setFilterstatus] = useState("all");
+  const [isStatusOpen, setIsStatusOpen] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState("Status");
+
+  const statusOptions = [
+    { value: "all", label: "All" },
+    { value: "active", label: "Active" },
+    { value: "inactive", label: "InActive" },
+  ];
+
+  const handleStatusSelect = (value, label) => {
+    setSelectedStatus(label);
+    setFilterstatus(value);
+    setIsStatusOpen(false);
+  };
 
   const getData = () => {
     axios
-      .get("http://localhost:3000/client/all")
+      .get("http://localhost:3000/arbitrator/all")
       .then((res) => {
         console.log(res.data.user);
         setData(res.data.user);
@@ -21,6 +36,7 @@ const ClientDashboard = () => {
         console.log(err);
       });
   };
+
   useEffect(() => {
     getData();
   }, []);
@@ -29,9 +45,8 @@ const ClientDashboard = () => {
     <>
       <div className="w-[90%] flex justify-between mt-8 ml-12">
         <h1 className="text-[24px] font-bold">
-          User {">"} {">"} Client
+          User {">"} {">"} Arbitrator
         </h1>
-
         <div className="bg-[#dcedfd] p-2 rounded-full">
           <LuUser className="text-xl" />
         </div>
@@ -63,27 +78,47 @@ const ClientDashboard = () => {
             </svg>
           </button>
         </div>
-        <div>
-          <select
-            className="px-4 py-1 bg-blue-50 rounded"
-            onChange={(e) => setFilterstatus(e.target.value)}
+
+        {/* Custom Status Dropdown */}
+        <div className="relative">
+          <button
+            onClick={() => setIsStatusOpen(!isStatusOpen)}
+            className="flex items-center justify-between w-32 px-4 py-1 bg-blue-50 rounded hover:bg-blue-100 transition-colors"
           >
-            <option value="all">All</option>
-            <option value="active">Active</option>
-            <option value="inactive">InActive</option>
-          </select>
+            <span>{selectedStatus}</span>
+            {isStatusOpen ? (
+              <ChevronUp className="w-4 h-4" />
+            ) : (
+              <ChevronDown className="w-4 h-4" />
+            )}
+          </button>
+          
+          {isStatusOpen && (
+            <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded shadow-lg">
+              {statusOptions.map((option) => (
+                <div
+                  key={option.value}
+                  className="px-4 py-2 hover:bg-blue-50 cursor-pointer"
+                  onClick={() => handleStatusSelect(option.value, option.label)}
+                >
+                  {option.label}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
       {/* Add Arbitrator */}
       <div className="flex justify-end w-[90%] mx-auto mt-10">
         <button className="bg-[#B9DCFD] hover:bg-blue-500 font-semibold text-[16px] p-2 text-black py-2 px-4 flex items-center gap-0 border-1 border-slate-950">
-          <span>Add</span>
+          <Link to={"/arbitrator/addarbitrator"}>
+            <span>Add</span>
+          </Link>
         </button>
       </div>
 
       {/* Table Data */}
-
       <table cellSpacing="0">
         <thead>
           <tr>
@@ -91,7 +126,7 @@ const ClientDashboard = () => {
             <th>Name</th>
             <th>Contact No.</th>
             <th>Email ID</th>
-            <th>Cases Added</th>
+            <th>No. of assign Case</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -109,38 +144,38 @@ const ClientDashboard = () => {
             }
           })
           .filter((stat) => {
-            if (filterstatus == "all") {
+            if (filterstatus === "all") {
               return stat;
-            } else if (filterstatus == "active") {
-              return stat.status == true;
+            } else if (filterstatus === "active") {
+              return stat.status === true;
             } else {
-              return stat.status == false;
+              return stat.status === false;
             }
           })
           .map((arbitratior) => (
-              <tbody key={arbitratior._id}>
-                <tr className={styles.trbody}>
-                  <td data-label="ID">{arbitratior._id?.slice(0, 5)}</td>
-                  <td data-label="Name">{arbitratior.name}</td>
-                  <td data-label="Contact No." className={styles.number}>
-                    {arbitratior.contactNo}
-                  </td>
-                  <td data-label="Email ID">{arbitratior.emailId}</td>
-                  <td data-label="No. of assign Case">
-                    {arbitratior.caseAdded}
-                  </td>
-                  <td data-label="Status" className={styles.status}>
-                    {arbitratior.status == false ? "InActive" : "Active"}
-                  </td>
-                  <td data-label="Action">
-                    <FiEdit3 style={{ color: "blue", fontSize: "24px" }} />
-                  </td>
-                </tr>
-              </tbody>
+            <tbody key={arbitratior._id}>
+              <tr className={styles.trbody}>
+                <td data-label="ID">{arbitratior._id?.slice(0, 5)}</td>
+                <td data-label="Name">{arbitratior.name}</td>
+                <td data-label="Contact No." className={styles.number}>
+                  {arbitratior.contactNo}
+                </td>
+                <td data-label="Email ID">{arbitratior.emailId}</td>
+                <td data-label="No. of assign Case">
+                  {arbitratior.noOfAssignCase}
+                </td>
+                <td data-label="Status" className={styles.status}>
+                  {arbitratior.status === false ? "InActive" : "Active"}
+                </td>
+                <td data-label="Action">
+                  <FiEdit3 style={{ color: "blue", fontSize: "24px" }} />
+                </td>
+              </tr>
+            </tbody>
           ))}
       </table>
     </>
   );
 };
 
-export default ClientDashboard;
+export default ArbitratorDashboard;

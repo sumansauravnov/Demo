@@ -3,15 +3,18 @@ const jwt = require("jsonwebtoken");
 const { USER } = require("../model/user.model");
 
 const handleAuthSignup = async (req, res) => {
+  let password = req.body.password
+  if (!password) {
+    password = "password@123"
+  }
   const {
     name,
     contactNo,
     emailId,
-    noOfAssignCase,
-    caseAdded,
-    status,
-    password,
     role,
+    areaOfExpertise,
+    experienceInYears,
+    about
   } = req.body;
   try {
     const hash = await argon2.hash(password);
@@ -22,17 +25,18 @@ const handleAuthSignup = async (req, res) => {
       name,
       contactNo,
       emailId,
-      noOfAssignCase,
-      caseAdded,
-      status,
       password: hash,
       role,
+      areaOfExpertise,
+      experienceInYears,
+      about
     });
     if (!newUser) {
       return res.status(500).json({ message: "Internel error" });
     }
     return res.status(201).json({ message: "User created successfully" });
   } catch (err) {
+    console.log(err)
     return res.status(500).json({ message: "Internel error" });
   }
 };
