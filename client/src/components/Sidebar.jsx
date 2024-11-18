@@ -33,7 +33,11 @@ const Sidebar = () => {
           `}
           >
             <div className="flex-1">
-              <ul className="p-4 space-y-0 mt-16">
+              <h1 className="px-8 mt-4 ml-4 md:ml-1 lg:ml-0 font-bold text-2xl">
+                Recht Tech
+              </h1>
+
+              <ul className="p-4 space-y-0 mt-5">
                 <Link to="/admin">
                   <li className="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-lg transition-colors">
                     <span className="mr-3">📊</span>
@@ -55,25 +59,28 @@ const Sidebar = () => {
                   </span> */}
                 </li>
 
-                {isUsersOpen && ( 
-                <div className="ml-8 space-y-1">
-                  <Link to="/arbitratortable">
-                    <li className="flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-blue-100 rounded-lg transition-colors">
-                      Arbitrator
-                    </li>
-                  </Link>
-                  <Link to="/clienttable">
-                    <li className="flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-blue-100 rounded-lg transition-colors">
-                      Client
-                    </li>
-                  </Link>
-                </div>
-                )} 
+                {isUsersOpen && (
+                  <div className="ml-8 space-y-1">
+                    <Link to="/arbitratortable">
+                      <li className="flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-blue-100 rounded-lg transition-colors">
+                        Arbitrator
+                      </li>
+                    </Link>
+                    <Link to="/clienttable">
+                      <li className="flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-blue-100 rounded-lg transition-colors">
+                        Client
+                      </li>
+                    </Link>
+                  </div>
+                )}
 
-                <li className="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-lg transition-colors">
-                  <span className="mr-3">📁</span>
-                  Cases
-                </li>
+                <Link to="/client/cases">
+                  <li className="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-lg transition-colors">
+                    <span className="mr-3">📁</span>
+                    Cases
+                  </li>
+                </Link>
+
                 <li className="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-lg transition-colors">
                   <span className="mr-3">📅</span>
                   Meetings
