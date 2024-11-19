@@ -17,16 +17,6 @@ import Uploadcase from "./pages/AdminDashboard/UploadCases/Uploadcase";
 function App() {
   return (
     <>
-      {/* <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/client" element={<ClientDashboard />} />
-        <Route path="/arbitrator" element={<ArbitratorDashboard />} />
-        <Route path="/resetdashboard" element={<ResetDashboard />} />
-        <Route path="/resetdashboard/otp" element={<ResetOTP />} />
-        <Route path="/resetdashboard/setpassword" element={<SetPassword />} />
-      </Routes> */}
-
       <div className="flex">
         {/* Only show sidebar for authenticated routes */}
         <Routes>
