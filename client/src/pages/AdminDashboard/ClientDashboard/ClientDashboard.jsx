@@ -36,6 +36,7 @@ const ClientDashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [editData, setEditData] = useState(null);
 
+
   const handleOpen = (arbitratior) => {
     setIsOpen(true);
     setEditData(arbitratior);
