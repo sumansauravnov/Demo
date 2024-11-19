@@ -19,8 +19,8 @@ const appointArbitratorandNotify = async (req, res) => {
       updatedCases,
     });
   } catch (err) {
-    console.log(err)
-    return res.status(500).json({ message: "Internal Server Error"});
+    console.log(err);
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
