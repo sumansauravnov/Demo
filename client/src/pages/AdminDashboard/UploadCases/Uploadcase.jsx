@@ -18,6 +18,7 @@ const Uploadcase = () => {
   const [formData, setFormData] = useState({
     clientName: "",
     clientId: "",
+    clientEmail: "",
   });
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState("");
@@ -34,6 +35,7 @@ const Uploadcase = () => {
       ...prev,
       clientId: newValue.clientId,
       clientName: newValue.clientName,
+      clientEmail: newValue.value,
     }));
   };
 
@@ -49,7 +51,7 @@ const Uploadcase = () => {
       return;
     }
 
-    if (!formData.clientName || !formData.clientId) {
+    if (!formData.clientName || !formData.clientId || !formData.clientEmail) {
       toast.error("Please fill in all client details");
       return;
     }
@@ -58,6 +60,7 @@ const Uploadcase = () => {
     submitData.append("excelFile", file);
     submitData.append("clientName", formData.clientName);
     submitData.append("clientId", formData.clientId);
+    submitData.append("clientEmail", formData.clientEmail);
     submitData.append("fileName", file.name);
 
     try {
@@ -78,10 +81,12 @@ const Uploadcase = () => {
       setFormData({
         clientName: "",
         clientId: "",
+        clientEmail: "",
       });
       setFile(null);
       const fileInput = document.querySelector('input[type="file"]');
       if (fileInput) fileInput.value = "";
+      setIsOpen(false);
     } catch (error) {
       setMessage("Error uploading file");
       toast.error("Error uploading file");
