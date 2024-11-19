@@ -2,14 +2,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import CreatableSelect from "react-select/creatable";
 import axios from "axios";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectGroup,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
 import toast from "react-hot-toast";
 import {
   Dialog,
@@ -18,10 +10,9 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  //   DialogTrigger,
 } from "@/components/ui/dialog";
-// import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import CaseDashboard from "./CaseDashboard";
 
 const Uploadcase = () => {
   const [data, setData] = useState([]);
@@ -208,6 +199,8 @@ const Uploadcase = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <CaseDashboard />
     </>
   );
 };
