@@ -2,14 +2,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import CreatableSelect from "react-select/creatable";
 import axios from "axios";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectGroup,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
 import toast from "react-hot-toast";
 import {
   Dialog,
@@ -18,12 +10,18 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  //   DialogTrigger,
 } from "@/components/ui/dialog";
-// import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const Uploadcase = () => {
+  const [formData, setFormData] = useState({
+    clientName: "",
+    clientId: "",
+  });
+  const [file, setFile] = useState(null);
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [options, setOptions] = useState([]);
@@ -31,15 +29,64 @@ const Uploadcase = () => {
 
   const handleChange = (newValue) => {
     setSelectedOption(newValue);
-    console.log("Selected:", newValue);
+    setFormData((prev) => ({
+      ...prev,
+      clientId: newValue.clientId,
+      clientName: newValue.clientName,
+    }));
   };
 
   const handleUploadFunction = () => {
     setIsOpen(true);
   };
 
-  const handleUpload = () => {
-    console.log("Uploading file...");
+  const handleUpload = async (e) => {
+    e.preventDefault();
+
+    if (!file) {
+      toast.error("Please select a file");
+      return;
+    }
+
+    if (!formData.clientName || !formData.clientId) {
+      toast.error("Please fill in all client details");
+      return;
+    }
+
+    const submitData = new FormData();
+    submitData.append("excelFile", file);
+    submitData.append("clientName", formData.clientName);
+    submitData.append("clientId", formData.clientId);
+    submitData.append("fileName", file.name);
+
+    try {
+      setLoading(true);
+      const response = await fetch("http://localhost:3000/uploadcasedata", {
+        method: "POST",
+        body: submitData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Upload failed");
+      }
+
+      setMessage(data.message);
+      toast.success("File uploaded successfully");
+      setFormData({
+        clientName: "",
+        clientId: "",
+      });
+      setFile(null);
+      const fileInput = document.querySelector('input[type="file"]');
+      if (fileInput) fileInput.value = "";
+    } catch (error) {
+      setMessage("Error uploading file");
+      toast.error("Error uploading file");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const formattedDate = useMemo(() => {
@@ -61,8 +108,6 @@ const Uploadcase = () => {
       "November",
       "December",
     ];
-
-    console.log(`Day: ${day}, Month: ${monthNames[month]}, Year: ${year}`);
     return `${day} ${monthNames[month]} ${year}`;
   }, []);
 
@@ -70,16 +115,16 @@ const Uploadcase = () => {
     axios
       .get("http://localhost:3000/client/all")
       .then((res) => {
-        console.log(res.data.user);
         const formattedOptions = res.data.user.map((user) => ({
           value: user.emailId,
           label: user.emailId,
+          clientId: user.uid,
+          clientName: user.name,
         }));
         setData(formattedOptions);
         setOptions(formattedOptions);
       })
       .catch((err) => {
-        console.error("Error fetching data:", err);
         toast.error("Failed to fetch client data");
       });
   };
@@ -104,9 +149,9 @@ const Uploadcase = () => {
       <div className="flex justify-end mr-2">
         <div className="block border-2 border-dashed w-[50%] md:w-[20%] lg:w-[20%] mt-5">
           <h1 className="text-center mt-1">Upload Case Details</h1>
-          <div className="text-center p-5">
+          <div className="text-center p-4">
             <button
-              className="bg-indigo-500 p-2 rounded-sm text-white"
+              className="bg-blue-700 hover:bg-blue-800 px-4 py-1 rounded-sm text-white"
               onClick={handleUploadFunction}
             >
               File Upload
@@ -122,21 +167,15 @@ const Uploadcase = () => {
               File Details
             </DialogTitle>
             <DialogDescription className="text-sm text-gray-600">
-              <p>
-                File Name:{" "}
-                <span className="font-medium text-gray-800">Excel</span>
-              </p>
-              <p>
-                Date:{" "}
-                <span className="font-medium text-gray-800">
-                  {formattedDate}
-                </span>
-              </p>
+              File Name:{" "}
+              <span className="font-medium text-gray-800">Excel</span>
+              <br />
+              Date:{" "}
+              <span className="font-medium text-gray-800">{formattedDate}</span>
             </DialogDescription>
           </DialogHeader>
 
           <div className="grid gap-6">
-            {/* Email Input */}
             <div className="grid grid-cols-1 sm:grid-cols-4 items-center gap-4">
               <Label
                 htmlFor="status"
@@ -165,14 +204,13 @@ const Uploadcase = () => {
               </div>
             </div>
 
-            {/* File Upload */}
             <div className="flex flex-col">
               <Label className="block text-sm font-medium text-gray-700 mb-1">
                 Excel File <span className="text-red-500">*</span>
               </Label>
               <label
                 htmlFor="uploadFile1"
-                className="w-[200px] md:w-[300px] ml-[100px] md:ml-[120px] lg:ml-[120px] mt-[-15px] bg-white text-gray-500 font-semibold text-base rounded h-52 flex flex-col items-center justify-center cursor-pointer border-2 border-gray-300 border-dashed font-[sans-serif]"
+                className="w-[200px] md:w-[300px] ml-[100px] md:ml-[120px] lg:ml-[120px] mt-[-15px] bg-white text-gray-500 font-semibold text-base rounded h-40 flex flex-col items-center justify-center cursor-pointer border-2 border-gray-300 border-dashed font-[sans-serif]"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -189,11 +227,25 @@ const Uploadcase = () => {
                   />
                 </svg>
                 Upload file
-                <input type="file" id="uploadFile1" className="hidden" />
+                <input
+                  type="file"
+                  accept=".xlsx, .xls"
+                  onChange={(e) => {
+                    setFile(e.target.files[0]);
+                    setMessage(e.target.files[0]);
+                  }}
+                  id="uploadFile1"
+                  className="hidden"
+                />
                 <p className="text-xs font-medium text-gray-400 mt-2">
                   Only .xlsx file is Allowed.
                 </p>
               </label>
+              {message && (
+                <div className="text-sm text-gray-600 mt-2 text-center">
+                  Selected file: {message.name}
+                </div>
+              )}
             </div>
           </div>
 

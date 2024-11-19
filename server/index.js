@@ -7,6 +7,8 @@ const { resetPasswordRoute } = require("./routes/resetpassword.route");
 const { arbitratorRoute } = require("./routes/arbitrator.route");
 const { clientRoute } = require("./routes/client.route");
 const { uidRoute } = require("./routes/uid.route");
+const { caseDataRoute } = require("./routes/caseData.route");
+const { expertRoute } = require("./routes/expert.route");
 
 const app = express();
 
@@ -19,9 +21,11 @@ app.get("/", (req, res) => {
 
 app.use("/auth", userRoute);
 app.use("/resetpassword", resetPasswordRoute);
-app.use("/arbitrator", arbitratorRoute)
-app.use("/client", clientRoute)
-app.use("/autouid", uidRoute)
+app.use("/arbitrator", arbitratorRoute);
+app.use("/client", clientRoute);
+app.use("/autouid", uidRoute);
+app.use("/uploadcasedata", caseDataRoute);
+app.use("/experties", expertRoute);
 
 const port = process.env.PORT;
 
