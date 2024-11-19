@@ -13,8 +13,12 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import CaseDashboard from "./CaseDashboard";
+import { useDispatch, useSelector } from "react-redux";
+import { refreshers } from "@/global/action";
 
 const Uploadcase = () => {
+  let dispatch = useDispatch();
+  let refresher = useSelector((state) => state?.refresher);
   const [formData, setFormData] = useState({
     clientName: "",
     clientId: "",
@@ -40,6 +44,7 @@ const Uploadcase = () => {
   };
 
   const handleUploadFunction = () => {
+    setSelectedOption(null);
     setIsOpen(true);
   };
 
@@ -78,6 +83,8 @@ const Uploadcase = () => {
 
       setMessage(data.message);
       toast.success("File uploaded successfully");
+      setSelectedOption(null);
+      dispatch(refreshers(!refresher));
       setFormData({
         clientName: "",
         clientId: "",

@@ -23,8 +23,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const CaseDashboard = () => {
+  let refresher = useSelector((state) => state.refresher);
   const [data, setData] = useState([]);
   const [caseData, setCaseData] = useState([]);
   const [searchByFileName, setSearchByFileName] = useState("");
@@ -37,8 +39,8 @@ const CaseDashboard = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     arbitrator: "",
-    arbitraryId: "",
-    arbitraryEmail: "",
+    arbitratorId: "",
+    arbitratorEmail: "",
   });
 
   const getData = () => {
@@ -48,10 +50,10 @@ const CaseDashboard = () => {
         const formattedOptions = res.data.user.map((user) => ({
           value: user.name,
           label: `${user.contactNo} / ${user.name}`,
-          arbitraryId: user.uid,
+          arbitratorId: user.uid,
           arbitratorEmail: user.emailId,
           arbitrtoriid: user._id,
-          arbitraryName: user.name,
+          arbitratorName: user.name,
         }));
         setData(formattedOptions);
         setOptions(formattedOptions);
@@ -80,9 +82,9 @@ const CaseDashboard = () => {
     setSelectedOption(newValue);
     setFormData((prev) => ({
       ...prev,
-      arbitrary: newValue.value,
-      arbitraryId: newValue.arbitrtoriid,
-      arbitraryEmail: newValue.arbitraryEmail,
+      arbitrator: newValue.value,
+      arbitratorId: newValue.arbitrtoriid,
+      arbitratorEmail: newValue.arbitratorEmail,
     }));
     console.log("formdata", formData);
   };
@@ -91,8 +93,8 @@ const CaseDashboard = () => {
     let obj = {
       caseId: appointdata,
       arbitrator: formData.arbitrator,
-      arbitraryId: formData.arbitraryId,
-      arbitraryEmail: formData.arbitraryEmail,
+      arbitratorId: formData.arbitratorId,
+      arbitratorEmail: formData.arbitratorEmail,
     };
     setLoading(true);
     axios
@@ -100,6 +102,7 @@ const CaseDashboard = () => {
       .then((res) => {
         toast.success("Arbitrator appointed");
         setLoading(false);
+        setIsOpen(false);
       })
       .catch((err) => {
         toast.error("Something went wrong");
@@ -119,7 +122,7 @@ const CaseDashboard = () => {
   };
   useEffect(() => {
     allcaseData();
-  }, []);
+  }, [refresher]);
 
   const handleUploadFunction = (value) => {
     setIsOpen(true);
@@ -238,7 +241,7 @@ const CaseDashboard = () => {
               <th>File Name</th>
               <th>Case Count</th>
               <th>Uploaded Date</th>
-              <th>Action</th>
+              <th>Arbitrator</th>
               {/* <th>Status</th> */}
             </tr>
           </thead>
@@ -273,14 +276,18 @@ const CaseDashboard = () => {
                       .join("-")}
                   </td>
                   <td data-label="Action">
-                    <FcBusinessman
-                      style={{
-                        color: "blue",
-                        fontSize: "24px",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => handleUploadFunction(cases._id)}
-                    />
+                    {cases.arbitrator == "" ? (
+                      <FcBusinessman
+                        style={{
+                          color: "blue",
+                          fontSize: "24px",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => handleUploadFunction(cases._id)}
+                      />
+                    ) : (
+                      cases.arbitrator?.split(" ")[0]
+                    )}
                   </td>
                   {/* <td>
                     {cases.arbitrator == "" ? "Not Assigned" : cases.arbitrator}
