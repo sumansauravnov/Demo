@@ -12,6 +12,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import CaseDashboard from "./CaseDashboard";
 
 const Uploadcase = () => {
   const [formData, setFormData] = useState({
@@ -260,6 +261,8 @@ const Uploadcase = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <CaseDashboard />
     </>
   );
 };
