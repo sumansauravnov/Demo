@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/dialog";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
+import Loading from "@/components/Loading";
 
 const CaseDashboard = () => {
   let refresher = useSelector((state) => state.refresher);
@@ -129,6 +130,22 @@ const CaseDashboard = () => {
     setAppointdata(value);
   };
 
+  const uniqueNames = [];
+  const seenNames = new Set();
+  caseData.forEach((item) => {
+    if (!seenNames.has(item.clientName)) {
+      seenNames.add(item.clientName);
+      uniqueNames.push(item); // Add unique item to the array
+    }
+  });
+
+
+
+if(loading){
+  return <Loading/>
+}
+
+
   return (
     <div className="max-w-5xl mx-auto">
       {data.length == 0 ? (
@@ -149,7 +166,10 @@ const CaseDashboard = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {caseData.map((item) => (
+                  <SelectItem key="all" value="all">
+                    All
+                  </SelectItem>
+                  {uniqueNames.map((item) => (
                     <SelectItem key={item._id} value={item.clientName}>
                       {item.clientName}
                     </SelectItem>
@@ -167,11 +187,14 @@ const CaseDashboard = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {caseData.map((item) => (
+                  {/* {caseData.map((item) => (
                     <SelectItem key={item._id} value={item.clientName}>
                       {item.clientName}
                     </SelectItem>
-                  ))}
+                  ))} */}
+                  <SelectItem key="filter" value="filter">
+                      filter
+                    </SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -248,9 +271,14 @@ const CaseDashboard = () => {
           {caseData
             .filter((name) => {
               if (!filterByBankName) return true; // Show all data if searchData is empty
-              return name.clientName
+              if(filterByBankName=="all"){
+                return name
+              }
+              else{
+                return name.clientName
                 .toLowerCase()
                 .includes(filterByBankName.toLowerCase());
+              }
             })
             .filter((file) => {
               if (!searchByFileName) return true; // Show all data if searchData is empty
