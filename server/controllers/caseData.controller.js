@@ -1,5 +1,6 @@
 const xlsx = require("xlsx");
 const { CASEDATA } = require("../model/caseData.model");
+const { USER } = require("../model/user.model");
 
 const handleCaseData = async (req, res) => {
   try {
@@ -7,9 +8,9 @@ const handleCaseData = async (req, res) => {
       return res.status(400).json({ message: "No file uploaded" });
     }
 
-    const { clientName, clientId } = req.body;
+    const { clientName, clientId, clientEmail } = req.body;
 
-    if (!clientName || !clientId) {
+    if (!clientName || !clientId || !clientEmail) {
       return res.status(400).json({ message: "Client details are required" });
     }
 
@@ -40,12 +41,25 @@ const handleCaseData = async (req, res) => {
     const newCaseData = new CASEDATA({
       clientName,
       clientId,
+      clientEmail,
       fileName: req.file.originalname,
       defaulters: transformedDefaulters,
       caseCount: transformedDefaulters.length,
     });
 
     await newCaseData.save();
+
+    const updateClient = await USER.findOne({ emailId: clientEmail });
+    let caseAdded =
+      parseInt(updateClient.caseAdded) + transformedDefaulters.length;
+    const user = await USER.updateOne(
+      { emailId: clientEmail },
+      { caseAdded: caseAdded }
+    );
+
+    if (!user) {
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
 
     return res.json({
       message: `Successfully uploaded ${transformedDefaulters.length} records`,
@@ -60,15 +74,13 @@ const handleCaseData = async (req, res) => {
   }
 };
 
-
-
-const handleGetCaseData = async  (req,res)=>{
+const handleGetCaseData = async (req, res) => {
   try {
-    const cases = await CASEDATA.find()
+    const cases = await CASEDATA.find();
     res.status(200).json({ cases });
   } catch (err) {
     return res.status(500).json({ message: "Internal Server Error" });
   }
-}
+};
 
 module.exports = { handleCaseData, handleGetCaseData };

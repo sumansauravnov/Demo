@@ -12,7 +12,7 @@ const handleAuthSignup = async (req, res) => {
     contactNo,
     emailId,
     role,
-    areaOfExpertise,
+    areaOfExperties,
     experienceInYears,
     about,
     uid
@@ -28,7 +28,7 @@ const handleAuthSignup = async (req, res) => {
       emailId,
       password: hash,
       role,
-      areaOfExpertise,
+      areaOfExperties,
       experienceInYears,
       about,
       uid

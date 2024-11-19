@@ -1,7 +1,11 @@
-const { addExpertiers } = require("../controllers/expert.controller");
+const {
+  addExperties,
+  allExperties,
+} = require("../controllers/expert.controller");
 
 const expertRoute = require("express").Router();
 
-expertRoute.post("/", addExpertiers);
+expertRoute.post("/", addExperties);
+expertRoute.get("/", allExperties);
 
 module.exports = { expertRoute };

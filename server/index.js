@@ -9,6 +9,7 @@ const { clientRoute } = require("./routes/client.route");
 const { uidRoute } = require("./routes/uid.route");
 const { caseDataRoute } = require("./routes/caseData.route");
 const { expertRoute } = require("./routes/expert.route");
+const { appointAllRoute } = require("./routes/arbitratorassandnotify.route");
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/client", clientRoute);
 app.use("/autouid", uidRoute);
 app.use("/uploadcasedata", caseDataRoute);
 app.use("/experties", expertRoute);
+app.use("/arbitratorappointnotifyall", appointAllRoute);
 
 const port = process.env.PORT;
 

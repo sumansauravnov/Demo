@@ -4,6 +4,7 @@ const caseDataSchema = new mongoose.Schema(
   {
     clientName: String,
     clientId: String,
+    clientEmail: String,
     fileName: String,
     caseCount: Number,
     uploadDate: {
@@ -15,6 +16,10 @@ const caseDataSchema = new mongoose.Schema(
       default: "",
     },
     arbitratorId: {
+      type: String,
+      default: "",
+    },
+    arbitratorEmail: {
       type: String,
       default: "",
     },

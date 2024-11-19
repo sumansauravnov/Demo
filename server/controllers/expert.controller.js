@@ -1,6 +1,6 @@
 const { EXPERTIES } = require("../model/areaOfExperties.model");
 
-const addExpertiers = async (req, res) => {
+const addExperties = async (req, res) => {
   const { name } = req.body;
 
   try {
@@ -14,4 +14,13 @@ const addExpertiers = async (req, res) => {
   }
 };
 
-module.exports = { addExpertiers };
+const allExperties = async (req, res) => {
+  try {
+    const experties = await EXPERTIES.find();
+    res.status(200).json({ experties });
+  } catch (err) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+module.exports = { addExperties, allExperties };

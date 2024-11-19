@@ -30,9 +30,38 @@ const userExists = async (req, res) => {
         address: process.env.GMAIL_APP_ID,
       },
       to: [emailId],
-      subject: "Request for Password Reset",
-      html: `<b>Hi, You've recently made a request to reset your password on the Rechtech Platform.</b><h2>OTP: ${otp}</h2>`,
+      subject: "Rechtech: Password Reset Request",
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
+          <div style="background-color: #4CAF50; color: white; padding: 20px; text-align: center;">
+            <h1 style="margin: 0;">Rechtech</h1>
+            <p style="margin: 0;">Secure Your Account</p>
+          </div>
+          <div style="padding: 20px;">
+            <p style="font-size: 16px; color: #333;">Hi,</p>
+            <p style="font-size: 16px; color: #333;">
+              You've recently made a request to reset your password on the Rechtech Platform. 
+              Please use the OTP below to reset your password. If you didn't request this, please ignore this email.
+            </p>
+            <div style="text-align: center; margin: 20px 0;">
+              <h2 style="font-size: 24px; color: #4CAF50; margin: 0;">${otp}</h2>
+            </div>
+            <p style="font-size: 14px; color: #666;">
+              This OTP will expire in 10 minutes. Do not share this OTP with anyone.
+            </p>
+          </div>
+          <div style="background-color: #f4f4f4; padding: 10px; text-align: center;">
+            <p style="font-size: 12px; color: #999; margin: 0;">
+              Need help? Contact us at <a href="mailto:support@rechtech.com" style="color: #4CAF50;">support@rechtech.com</a>.
+            </p>
+            <p style="font-size: 12px; color: #999; margin: 0;">
+              © 2024 Rechtech. All rights reserved.
+            </p>
+          </div>
+        </div>
+      `,
     };
+
     await transporter.sendMail(mailOptions);
     await PASSWORDRESET.deleteMany({ emailId: emailId });
     const userPassword = await PASSWORDRESET.create({
