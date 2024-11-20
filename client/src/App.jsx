@@ -13,6 +13,7 @@ import AddClient from "./pages/AdminDashboard/ClientDashboard/addClient";
 import ClientMain from "./pages/clinetMainPage/ClientMain";
 import ArbitratorMain from "./pages/arbitratorMainPage/ArbitratorMain";
 import Uploadcase from "./pages/AdminDashboard/UploadCases/Uploadcase";
+import DefaulterPage from "./pages/AdminDashboard/UploadCases/defaulter/[caseid]";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
                     />
                     <Route path="/client/addclient" element={<AddClient />} />
                     <Route path="/client/cases" element={<Uploadcase />} />
+                    <Route path="/defaulter/:caseid" element={<DefaulterPage />} />
                   </Routes>
                 </div>
               </div>
