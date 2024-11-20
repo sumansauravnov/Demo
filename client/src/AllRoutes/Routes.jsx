@@ -21,7 +21,7 @@ const Allroutes = () => {
       <div className="flex-1">
         <Routes>
           <Route path="/client" element={<ClientMain />} />
-          <Route path="/client/case" element={<ClientCases />} />
+          <Route path="/client/cases" element={<ClientCases />} />
           <Route path="/arbitrator" element={<ArbitratorMain />} />
           <Route path="/arbitrator/cases" element={<ArbitratorCases />} />
           <Route path="/admin" element={<AdminDashboard />} />

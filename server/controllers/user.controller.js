@@ -45,6 +45,7 @@ const handleAuthSignup = async (req, res) => {
 
 const handleAuthLogin = async (req, res) => {
   const { emailId, password } = req.body;
+  // console.log(emailId,password)
   try {
     const user = await USER.findOne({ emailId: emailId });
     if (!user) {
@@ -53,6 +54,7 @@ const handleAuthLogin = async (req, res) => {
     if (!(await argon2.verify(user.password, password))) {
       return res.status(401).json({ message: "Incorrect password" });
     }
+    // console.log(user)
     if (!user.status) {
       return res.status(401).json({ message: "User is inactive" });
     }

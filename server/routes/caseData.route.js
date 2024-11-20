@@ -9,6 +9,7 @@ const {
   handleGetCaseData,
   handleGetOneCaseData,
   arbitratorCases,
+  clientCases,
 } = require("../controllers/caseData.controller");
 
 const caseDataRoute = require("express").Router();
@@ -20,5 +21,7 @@ caseDataRoute.get("/", handleGetCaseData);
 caseDataRoute.get("/specific/:id", handleGetOneCaseData);
 
 caseDataRoute.get("/arbitratorcases", arbitratorCases);
+
+caseDataRoute.get("/clientcases", clientCases);
 
 module.exports = { caseDataRoute };
