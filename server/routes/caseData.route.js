@@ -8,6 +8,7 @@ const {
   handleCaseData,
   handleGetCaseData,
   handleGetOneCaseData,
+  arbitratorCases,
 } = require("../controllers/caseData.controller");
 
 const caseDataRoute = require("express").Router();
@@ -15,6 +16,9 @@ const caseDataRoute = require("express").Router();
 caseDataRoute.post("/", upload.single("excelFile"), handleCaseData);
 
 caseDataRoute.get("/", handleGetCaseData);
-caseDataRoute.get("/:id", handleGetOneCaseData);
+
+caseDataRoute.get("/specific/:id", handleGetOneCaseData);
+
+caseDataRoute.get("/arbitratorcases", arbitratorCases);
 
 module.exports = { caseDataRoute };
