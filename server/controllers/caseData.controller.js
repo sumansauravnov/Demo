@@ -122,9 +122,39 @@ const arbitratorCases = async (req, res) => {
   }
 };
 
+const clientCases = async (req, res) => {
+  const { token } = req.headers;
+
+  if (!token) {
+    return res.status(401).json({ message: "Token not provided" });
+  }
+  try {
+    const decoded = jwt.verify(
+      token?.split(" ")[1],
+      process.env.JWT_SECRET_KEY
+    );
+    if (!decoded) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+    const id = decoded.id;
+    const user = await USER.findById(id)
+    if(!user){
+      return res.status(402).json({message:"Invalid user id"})
+    }
+    const caseData = await CASEDATA.find({ clientId: user.uid });
+    if (!caseData) {
+      return res.status(404).json({ message: "Case data not found" });
+    }
+    res.status(200).json({ caseData });
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   handleCaseData,
   handleGetCaseData,
   handleGetOneCaseData,
   arbitratorCases,
+  clientCases,
 };

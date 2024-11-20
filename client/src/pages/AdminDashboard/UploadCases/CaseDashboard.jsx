@@ -266,12 +266,11 @@ if(loading){
               <th>Case Count</th>
               <th>Uploaded Date</th>
               <th>Arbitrator</th>
-              {/* <th>Status</th> */}
             </tr>
           </thead>
           {caseData
             .filter((name) => {
-              if (!filterByBankName) return true; // Show all data if searchData is empty
+              if (!filterByBankName) return true;
               if(filterByBankName=="all"){
                 return name
               }
@@ -282,11 +281,11 @@ if(loading){
               }
             })
             .filter((file) => {
-              if (!searchByFileName) return true; // Show all data if searchData is empty
+              if (!searchByFileName) return true; 
               return file.fileName.toLowerCase().includes(searchByFileName);
             })
             .filter((count) => {
-              if (!searchByCaseCount) return true; // Show all data if searchData is empty
+              if (!searchByCaseCount) return true; 
               return count.caseCount.toString().includes(searchByCaseCount);
             })
             .map((cases) => (
@@ -323,9 +322,6 @@ if(loading){
                       cases.arbitrator?.split(" ")[0]
                     )}
                   </td>
-                  {/* <td>
-                    {cases.arbitrator == "" ? "Not Assigned" : cases.arbitrator}
-                  </td> */}
                 </tr>
               </tbody>
             ))}
