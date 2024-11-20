@@ -23,7 +23,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { refreshers } from "@/global/action";
+import { useNavigate } from "react-router-dom";
 
 const CaseDashboard = () => {
   let refresher = useSelector((state) => state.refresher);
@@ -37,6 +39,8 @@ const CaseDashboard = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [appointdata, setAppointdata] = useState("");
   const [loading, setLoading] = useState(false);
+  let dispatch = useDispatch();
+  let navigate = useNavigate();
   const [formData, setFormData] = useState({
     arbitrator: "",
     arbitratorId: "",
@@ -103,6 +107,7 @@ const CaseDashboard = () => {
         toast.success("Arbitrator appointed");
         setLoading(false);
         setIsOpen(false);
+        dispatch(refreshers(!refresher));
       })
       .catch((err) => {
         toast.error("Something went wrong");
@@ -126,6 +131,7 @@ const CaseDashboard = () => {
 
   const handleUploadFunction = (value) => {
     setIsOpen(true);
+    setSelectedOption(null);
     setAppointdata(value);
   };
 
@@ -264,7 +270,11 @@ const CaseDashboard = () => {
               <tbody key={cases._id}>
                 <tr className={styles.trbody}>
                   <td data-label="Bankname">{cases.clientName}</td>
-                  <td data-label="File_name" className={styles.number}>
+                  <td
+                    data-label="File_name"
+                    className={styles.number}
+                    onClick={() => navigate(`/defaulter/${cases._id}`)}
+                  >
                     {cases.fileName}
                   </td>
                   <td data-label="Case_count">{cases.caseCount}</td>

@@ -83,4 +83,17 @@ const handleGetCaseData = async (req, res) => {
   }
 };
 
-module.exports = { handleCaseData, handleGetCaseData };
+const handleGetOneCaseData = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const caseData = await CASEDATA.findById(id);
+    if (!caseData) {
+      return res.status(404).json({ message: "Case data not found" });
+    }
+    res.status(200).json({ caseData });
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+module.exports = { handleCaseData, handleGetCaseData, handleGetOneCaseData };
