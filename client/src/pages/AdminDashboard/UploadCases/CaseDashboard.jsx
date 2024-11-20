@@ -193,11 +193,6 @@ if(loading){
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {/* {caseData.map((item) => (
-                    <SelectItem key={item._id} value={item.clientName}>
-                      {item.clientName}
-                    </SelectItem>
-                  ))} */}
                   <SelectItem key="filter" value="filter">
                       filter
                     </SelectItem>

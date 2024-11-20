@@ -14,6 +14,8 @@ import ClientMain from "./pages/clinetMainPage/ClientMain";
 import ArbitratorMain from "./pages/arbitratorMainPage/ArbitratorMain";
 import Uploadcase from "./pages/AdminDashboard/UploadCases/Uploadcase";
 import DefaulterPage from "./pages/AdminDashboard/UploadCases/defaulter/[caseid]";
+import ClientCases from "./pages/clinetMainPage/ClientCases";
+import ArbitratorCases from "./pages/arbitratorMainPage/ArbitratorCases";
 
 function App() {
   return (
@@ -25,8 +27,6 @@ function App() {
           <Route path="/resetdashboard" element={<ResetDashboard />} />
           <Route path="/resetdashboard/otp" element={<ResetOTP />} />
           <Route path="/resetdashboard/setpassword" element={<SetPassword />} />
-          <Route path="/client" element={<ClientMain />} />
-          <Route path="/arbitrator" element={<ArbitratorMain />} />
 
           {/* Authenticated routes with sidebar */}
           <Route
@@ -36,6 +36,14 @@ function App() {
                 <Sidebar />
                 <div className="flex-1">
                   <Routes>
+                    <Route path="/client" element={<ClientMain />} />
+                    <Route path="/client/case" element={<ClientCases />} />
+                    <Route path="/arbitrator" element={<ArbitratorMain />} />
+                    <Route
+                      path="/arbitrator/cases"
+                      element={<ArbitratorCases />}
+                    />
+
                     <Route path="/admin" element={<AdminDashboard />} />
                     <Route path="/clienttable" element={<ClientDashboard />} />
                     <Route
@@ -47,8 +55,11 @@ function App() {
                       element={<AddArbitrator />}
                     />
                     <Route path="/client/addclient" element={<AddClient />} />
-                    <Route path="/client/cases" element={<Uploadcase />} />
-                    <Route path="/defaulter/:caseid" element={<DefaulterPage />} />
+                    <Route path="/admin/cases" element={<Uploadcase />} />
+                    <Route
+                      path="/defaulter/:caseid"
+                      element={<DefaulterPage />}
+                    />
                   </Routes>
                 </div>
               </div>

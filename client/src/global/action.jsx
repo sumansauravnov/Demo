@@ -1,5 +1,6 @@
 export const FORGOT_EMAIL = "FORGOT_EMAIL";
 export const REFRESHER = "REFRESHER";
+export const ROLE = "ROLE";
 
 export const forgotEmail = (payload) => {
   return {
@@ -14,3 +15,11 @@ export const refreshers = (payload) => {
     payload,
   };
 };
+
+export const updateRole = (payload) => {
+  return {
+    type: ROLE,
+    payload,
+  };
+};
+
