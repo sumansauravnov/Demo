@@ -10,7 +10,7 @@ const DefaulterPage = () => {
   const [caseData, setCaseData] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/uploadcasedata/${caseid}`)
+      .get(`http://localhost:3000/uploadcasedata/specific/${caseid}`)
       .then((res) => {
         setCaseData(res.data.caseData.defaulters);
         console.log("defaulters", res.data.caseData.defaulters)

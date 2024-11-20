@@ -1,6 +1,7 @@
 const xlsx = require("xlsx");
 const { CASEDATA } = require("../model/caseData.model");
 const { USER } = require("../model/user.model");
+const jwt = require("jsonwebtoken");
 
 const handleCaseData = async (req, res) => {
   try {
@@ -96,4 +97,34 @@ const handleGetOneCaseData = async (req, res) => {
   }
 };
 
-module.exports = { handleCaseData, handleGetCaseData, handleGetOneCaseData };
+const arbitratorCases = async (req, res) => {
+  const { token } = req.headers;
+
+  if (!token) {
+    return res.status(401).json({ message: "Token not provided" });
+  }
+  try {
+    const decoded = jwt.verify(
+      token?.split(" ")[1],
+      process.env.JWT_SECRET_KEY
+    );
+    if (!decoded) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+    const id = decoded.id;
+    const caseData = await CASEDATA.find({ arbitratorId: id });
+    if (!caseData) {
+      return res.status(404).json({ message: "Case data not found" });
+    }
+    res.status(200).json({ caseData });
+  } catch (err) {
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+module.exports = {
+  handleCaseData,
+  handleGetCaseData,
+  handleGetOneCaseData,
+  arbitratorCases,
+};

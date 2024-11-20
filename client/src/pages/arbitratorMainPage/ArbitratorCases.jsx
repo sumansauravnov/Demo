@@ -15,7 +15,7 @@ let token=JSON.parse(localStorage.getItem("rechtechtoken"))
 
 const getArbitratorCaseData = () => {
     axios
-      .get("", {
+      .get("http://localhost:3000/uploadcasedata/arbitratorcases", {
         headers: {
           token: token, // Add the token to the Authorization header
         },
@@ -25,6 +25,7 @@ const getArbitratorCaseData = () => {
       })
       .catch((err) => {
         toast.error("Something went wrong!");
+        console.log(err)
       });
   };
 
