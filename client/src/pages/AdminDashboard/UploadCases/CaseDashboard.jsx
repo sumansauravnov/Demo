@@ -301,6 +301,7 @@ if(loading){
                   <td
                     data-label="File_name"
                     className={styles.number}
+                    style={{ cursor: 'pointer' }}
                     onClick={() => navigate(`/defaulter/${cases._id}`)}
                   >
                     {cases.fileName}
