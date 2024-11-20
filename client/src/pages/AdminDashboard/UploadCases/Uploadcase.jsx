@@ -132,7 +132,7 @@ const Uploadcase = () => {
       .then((res) => {
         const formattedOptions = res.data.user.map((user) => ({
           value: user.emailId,
-          label: user.emailId,
+          label: `${user.contactNo} / ${user.name}`,
           clientId: user.uid,
           clientName: user.name,
         }));
@@ -234,7 +234,7 @@ const Uploadcase = () => {
                 />
                 {selectedOption && (
                   <p className="text-sm text-green-600 mt-1">
-                    You selected: {selectedOption.label}
+                    You selected: {selectedOption.label.split("/")[1]}
                   </p>
                 )}
               </div>
