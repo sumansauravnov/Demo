@@ -95,7 +95,7 @@ const Sidebar = () => {
                   </div>
                 )}
 
-                <Link to={role==="admin" ? "/admin/cases" : role==="arbitrator"? "/arbitrator/cases" : "/client/case"}>
+                <Link to={role==="admin" ? "/admin/cases" : role==="arbitrator"? "/arbitrator/cases" : "/client/cases"}>
                   <li className="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-lg transition-colors">
                     <span className="mr-3">📁</span>
                     Cases

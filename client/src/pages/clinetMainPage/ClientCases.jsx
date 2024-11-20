@@ -1,11 +1,78 @@
-import React from 'react'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "../AdminDashboard/ArbitratorDashboard/ArbitratorDashboard.module.css";
+import { FcVideoCall } from "react-icons/fc";
 
 const ClientCases = () => {
+  const navigate = useNavigate();
+  const [clientOwnData, setClientOwnData] = useState([]);
+  let token = JSON.parse(localStorage.getItem("rechtechtoken"));
+
+  const getArbitratorCaseData = () => {
+    axios
+      .get("http://localhost:3000/uploadcasedata/clientcases", {
+        headers: {
+          token: token,
+        },
+      })
+      .then((res) => {
+        setClientOwnData(res.data.caseData);
+      })
+      .catch((err) => {
+        toast.error("Something went wrong!");
+      });
+  };
+
+  useEffect(() => {
+    getArbitratorCaseData();
+  }, []);
+
   return (
     <div>
-      All Client Cases
-    </div>
-  )
-}
+      <div className="w-[90%] mx-auto mt-16">
+        <table cellSpacing="0">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email ID</th>
+              <th>File Name</th>
+              <th>Uploaded Date</th>
+              <th>Meeting Status</th>
+            </tr>
+          </thead>
+          {clientOwnData.map((clientcase) => (
+            <tbody key={clientcase._id}>
+              <tr className={styles.trbody}>
+                <td data-label="Name">{clientcase.clientName}</td>
+                <td data-label="Email ID">{clientcase.clientEmail}</td>
+                <td
+                  data-label="File Nmae"
+                  className={styles.number}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => navigate(`/defaulter/${clientcase._id}`)}
+                >
+                  {clientcase.fileName}
+                </td>
 
-export default ClientCases
+                <td data-label="No. of assign Case">
+                  {clientcase.uploadDate
+                    .split("T")[0]
+                    .split("-")
+                    .reverse()
+                    .join("-")}
+                </td>
+
+                <td data-label="No. of assign Case">
+                 Not Scheduled
+                </td>
+              </tr>
+            </tbody>
+          ))}
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default ClientCases;
