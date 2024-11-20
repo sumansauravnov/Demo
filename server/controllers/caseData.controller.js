@@ -77,7 +77,7 @@ const handleCaseData = async (req, res) => {
 
 const handleGetCaseData = async (req, res) => {
   try {
-    const cases = await CASEDATA.find();
+    const cases = await CASEDATA.find().sort({ _id: -1 });
     res.status(200).json({ cases });
   } catch (err) {
     return res.status(500).json({ message: "Internal Server Error" });

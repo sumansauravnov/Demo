@@ -24,7 +24,7 @@ const DefaulterPage = () => {
        <div className=" flex justify-between items-center mb-4 bg-white p-2 rounded-lg shadow-sm">
           <div className="flex items-center space-x-2">
             <div className="text-sm text-gray-500 flex items-center space-x-2">
-            <Link to="/client/cases">
+            <Link to="/admin/cases">
 
               <span className="cursor-pointer hover:text-blue-700 font-semibold">
                 Cases

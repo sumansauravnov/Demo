@@ -2,7 +2,7 @@ const { USER } = require("../model/user.model");
 
 const allClient = async (req, res) => {
   try {
-    let client = await USER.find({ role: "client" });
+    let client = await USER.find({ role: "client" }).sort({ _id: -1 });
     return res.status(200).json({ user: client });
   } catch (err) {
     return res.status(500).json({ message: "Internal Server Error" });

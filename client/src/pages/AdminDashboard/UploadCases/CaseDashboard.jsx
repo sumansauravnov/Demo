@@ -52,7 +52,7 @@ const CaseDashboard = () => {
     axios
       .get("http://localhost:3000/arbitrator/all")
       .then((res) => {
-        const formattedOptions = res.data.user.map((user) => ({
+        const formattedOptions = res.data.user.filter((user)=>user.status==true).map((user) => ({
           value: user.name,
           label: `${user.contactNo} / ${user.name}`,
           arbitratorId: user.uid,
