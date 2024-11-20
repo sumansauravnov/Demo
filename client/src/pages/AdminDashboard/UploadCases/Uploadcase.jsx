@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import CreatableSelect from "react-select/creatable";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
+import { LuUser } from "react-icons/lu";
 import {
   Dialog,
   DialogContent,
@@ -130,7 +132,7 @@ const Uploadcase = () => {
       .then((res) => {
         const formattedOptions = res.data.user.map((user) => ({
           value: user.emailId,
-          label: user.emailId,
+          label: `${user.contactNo} / ${user.name}`,
           clientId: user.uid,
           clientName: user.name,
         }));
@@ -158,7 +160,28 @@ const Uploadcase = () => {
   }, []);
 
   return (
-    <>
+    <div className="max-w-6xl mx-auto px-4 py-3">
+
+<div className=" flex justify-between items-center mb-4 bg-white p-2 rounded-lg shadow-sm">
+          <div className="flex items-center space-x-2">
+            <div className="text-sm text-gray-500 flex items-center space-x-2">
+            <Link to="/client/cases">
+
+              <span className="cursor-pointer hover:text-blue-700 font-semibold">
+                Cases
+              </span>
+            </Link>
+             
+            </div>
+          </div>
+          <div className="bg-blue-50 p-3 rounded-full">
+            <LuUser className="text-blue-600 text-xl" />
+          </div>
+        </div>
+
+
+
+
       <div className="flex justify-end mr-2">
         <div className="block border-2 border-dashed w-[50%] md:w-[20%] lg:w-[20%] mt-5">
           <h1 className="text-center mt-1">Upload Case Details</h1>
@@ -211,7 +234,7 @@ const Uploadcase = () => {
                 />
                 {selectedOption && (
                   <p className="text-sm text-green-600 mt-1">
-                    You selected: {selectedOption.label}
+                    You selected: {selectedOption.label.split("/")[1]}
                   </p>
                 )}
               </div>
@@ -275,7 +298,7 @@ const Uploadcase = () => {
       </Dialog>
 
       <CaseDashboard />
-    </>
+    </div>
   );
 };
 
