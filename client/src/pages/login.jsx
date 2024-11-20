@@ -1,11 +1,14 @@
+import { updateRole } from "@/global/action";
 import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
   const [client, setClient] = useState(true);
   let navigate = useNavigate();
+  let dispatch = useDispatch();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -16,8 +19,10 @@ export const Login = () => {
     axios
       .post("http://localhost:3000/auth/login", obj)
       .then((res) => {
-        localStorage.setItem("token", JSON.stringify(res.data.token));
+        localStorage.setItem("rechtechtoken", JSON.stringify(res.data.token));
         toast.success("Login successful");
+        dispatch(updateRole(res.data.role));
+        localStorage.setItem("rechtechrole", JSON.stringify(res.data.role));
         navigate(`/${res.data.role}`);
       })
       .catch((err) => {

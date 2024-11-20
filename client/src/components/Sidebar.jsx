@@ -1,12 +1,25 @@
 // import React from "react";
 import { useState } from "react";
 import { FaArrowRight, FaBars, FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoIosArrowDroprightCircle } from "react-icons/io";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const [isUsersOpen, setIsUsersOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const role = useSelector((state) => state.role);
+
+  const handleArbitratorPage = () => {
+    if (role === "admin") {
+      navigate("/arbitratortable");
+    } else {
+      toast.error("You are not authorized");
+    }
+  };
 
   return (
     <>
@@ -37,34 +50,43 @@ const Sidebar = () => {
               </h1>
 
               <ul className="p-4 space-y-0 mt-5">
-                <Link to="/admin">
+                <Link
+                  to={
+                    role == "arbitrator"
+                      ? "/arbitrator"
+                      : role == "client"
+                      ? "/client"
+                      : "/admin"
+                  }
+                >
                   <li className="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-lg transition-colors">
                     <span className="mr-3">📊</span>
                     Dashboard
                   </li>
                 </Link>
 
-                <li
-                  className="flex items-center justify-between px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-lg cursor-pointer transition-colors"
-                  onClick={() => setIsUsersOpen(!isUsersOpen)}
-                >
-                  <div className="flex items-center">
-                    <span className="mr-3">👥</span>
-                    Users
-                  </div>
-                  {/* <span className={`transform transition-transform duration-200 ${isUsersOpen ? 'rotate-90' : ''}`}>
-                  
-<IoIosArrowDroprightCircle/>
-                  </span> */}
-                </li>
+                {role === "admin" ? (
+                  <li
+                    className="flex items-center justify-between px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-lg cursor-pointer transition-colors"
+                    onClick={() => setIsUsersOpen(!isUsersOpen)}
+                  >
+                    <div className="flex items-center">
+                      <span className="mr-3">👥</span>
+                      Users
+                    </div>
+                  </li>
+                ) : null}
 
                 {isUsersOpen && (
                   <div className="ml-8 space-y-1">
-                    <Link to="/arbitratortable">
-                      <li className="flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-blue-100 rounded-lg transition-colors">
-                        Arbitrator
-                      </li>
-                    </Link>
+                    {/* <Link to="/arbitratortable"> */}
+                    <li
+                      className="flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-blue-100 rounded-lg transition-colors"
+                      onClick={handleArbitratorPage}
+                    >
+                      Arbitrator
+                    </li>
+                    {/* </Link> */}
                     <Link to="/clienttable">
                       <li className="flex items-center px-4 py-2 text-sm text-gray-600 hover:bg-blue-100 rounded-lg transition-colors">
                         Client
@@ -73,7 +95,7 @@ const Sidebar = () => {
                   </div>
                 )}
 
-                <Link to="/client/cases">
+                <Link to={role==="admin" ? "/admin/cases" : role==="arbitrator"? "/arbitrator/cases" : "/client/case"}>
                   <li className="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-lg transition-colors">
                     <span className="mr-3">📁</span>
                     Cases
