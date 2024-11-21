@@ -17,8 +17,10 @@ import ClientMain from "@/pages/clinetMainPage/ClientMain";
 const Allroutes = () => {
   return (
     <div className="flex w-full">
-      <Sidebar />
-      <div className="flex-1">
+      <div className="fixed top-0 left-0">
+        <Sidebar />
+      </div>
+      <div className="flex-1 md:ml-52">
         <Routes>
           <Route path="/client" element={<ClientMain />} />
           <Route path="/client/cases" element={<ClientCases />} />

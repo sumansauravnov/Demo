@@ -46,7 +46,7 @@ const DefaulterPage = () => {
         </div>
 
 
-        <div className="w-[90%] mx-auto mt-16">
+        <div className="w-[100%] mx-auto ">
       <table cellSpacing="0">
             <thead>
               <tr>
@@ -54,8 +54,6 @@ const DefaulterPage = () => {
                 <th>Email ID</th>
                 <th>Phone No.</th>
                 <th>Account No.</th>
-                <th>Email Status</th>
-                <th>Text Status</th>
               </tr>
             </thead>
             {caseData
@@ -68,16 +66,8 @@ const DefaulterPage = () => {
                     {arbitratior.contactNo}
                     </td>
                     
-                    <td data-label="No. of assign Case">
+                    <td data-label="Account No.">
                     {arbitratior.accountNo}
-                    </td>
-
-                    <td data-label="No. of assign Case">
-                    email status
-                    </td>
-
-                    <td data-label="No. of assign Case">
-                    text status
                     </td>
                    
                   </tr>

@@ -33,7 +33,7 @@ const ArbitratorCases = () => {
 
   return (
     <div>
-      <div className="w-[90%] mx-auto mt-16">
+      <div className="w-[100%] mx-auto mt-2 px-2">
         <table cellSpacing="0">
           <thead>
             <tr>
