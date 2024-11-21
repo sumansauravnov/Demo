@@ -11,6 +11,10 @@ const caseDataSchema = new mongoose.Schema(
       type: [String],
       default: [],
     },
+    meetId: {
+      type: [String],
+      default: [],
+    },
     uploadDate: {
       type: Date,
       default: Date.now(),
