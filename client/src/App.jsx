@@ -12,14 +12,14 @@ import Allroutes from "./AllRoutes/Routes";
 function App() {
   return (
     <div className="flex">
-      <Routes>
+     <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Login />} />
         <Route path="/resetdashboard" element={<ResetDashboard />} />
         <Route path="/resetdashboard/otp" element={<ResetOTP />} />
         <Route path="/resetdashboard/setpassword" element={<SetPassword />} />
 
-        {/* Authenticated Routes */}
+        {/* Aut henticated Routes */}
         <Route path="/*" element={<Allroutes />} />
       </Routes>
     </div>
