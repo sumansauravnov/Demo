@@ -31,7 +31,7 @@ const Sidebar = () => {
         {isSidebarOpen ? <FaTimes /> : <FaBars />}
       </button>
 
-      <div className="z-10 flex flex-col min-h-screen sticky">
+      <div className="z-10 flex flex-col min-h-screen">
         <div className="flex flex-1 overflow-hidden">
           <aside
             className={`

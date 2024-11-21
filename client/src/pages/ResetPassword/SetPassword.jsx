@@ -48,11 +48,45 @@ export const SetPassword = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validateForm()) {
+    const validatePassword = () => {
+      const password = formData.password;
+      const confirmPassword = formData.confirmPassword;
+      if (!password) {
+        toast.error("Password cannot be empty.");
+        return false;
+      }
+      if (password.length < 8) {
+        toast.error("Password must be at least 8 characters long.");
+        return false;
+      }
+      if (!/[A-Z]/.test(password)) {
+        toast.error("Password must contain at least one uppercase letter.");
+        return false;
+      }
+      if (!/[a-z]/.test(password)) {
+        toast.error("Password must contain at least one lowercase letter.");
+        return false;
+      }
+      if (!/[0-9]/.test(password)) {
+        toast.error("Password must contain at least one number.");
+        return false;
+      }
+      if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+        toast.error("Password must contain at least one special character.");
+        return false;
+      }
+      if (password !== confirmPassword) {
+        toast.error("Passwords do not match.");
+        return false;
+      }
+      return true;
+    };
+    if (validatePassword()) {
       let obj = {
         emailId,
         password: formData.password,
       };
+
       axios
         .put("http://localhost:3000/resetpassword/updatepassword", obj)
         .then((res) => {
@@ -60,7 +94,7 @@ export const SetPassword = () => {
           navigate("/");
           toast.success("Password has been updated successfully.");
         })
-        .catch((err) => {
+        .catch(() => {
           toast.error("Failed to update password. Please try again.");
         });
     }

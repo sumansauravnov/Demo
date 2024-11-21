@@ -10,6 +10,7 @@ const { uidRoute } = require("./routes/uid.route");
 const { caseDataRoute } = require("./routes/caseData.route");
 const { expertRoute } = require("./routes/expert.route");
 const { appointAllRoute } = require("./routes/arbitratorassandnotify.route");
+const { meetingRoute } = require("./routes/meeting.route");
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use("/autouid", uidRoute);
 app.use("/uploadcasedata", caseDataRoute);
 app.use("/experties", expertRoute);
 app.use("/arbitratorappointnotifyall", appointAllRoute);
+app.use("/meeting", meetingRoute);
 
 const port = process.env.PORT;
 

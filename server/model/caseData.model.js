@@ -7,6 +7,10 @@ const caseDataSchema = new mongoose.Schema(
     clientEmail: String,
     fileName: String,
     caseCount: Number,
+    meetLinks: {
+      type: [String],
+      default: [],
+    },
     uploadDate: {
       type: Date,
       default: Date.now(),

@@ -183,7 +183,7 @@ const Uploadcase = () => {
 
 
       <div className="flex justify-end mr-2">
-        <div className="block border-2 border-dashed w-[50%] md:w-[20%] lg:w-[20%] mt-5">
+        <div className="block border-2 border-dashed w-[50%] md:w-[30%] lg:w-[20%] mt-5">
           <h1 className="text-center mt-1">Upload Case Details</h1>
           <div className="text-center p-4">
             <button
