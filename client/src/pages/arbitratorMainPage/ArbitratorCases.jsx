@@ -35,7 +35,7 @@ const ArbitratorCases = () => {
   const [selectEndDate, setSelectEndDate] = useState(new Date());
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [meetingStatus, setMeetingStatus] = useState(false);
+  // const [meetingStatus, setMeetingStatus] = useState(false);
   const [caseId, setCaseId] = useState("");
 
   let token = JSON.parse(localStorage.getItem("rechtechtoken"));
@@ -44,7 +44,7 @@ const ArbitratorCases = () => {
     axios
       .get("http://localhost:3000/uploadcasedata/arbitratorcases", {
         headers: {
-          token: token, // Add the token to the Authorization header
+          token: token, 
         },
       })
       .then((res) => {
@@ -58,24 +58,22 @@ const ArbitratorCases = () => {
   useEffect(() => {
     getArbitratorCaseData();
   }, []);
-  
+
   useEffect(() => {
-    if (isOpen) {
+    if (!isOpen) {
       setCaseId("");
       setTitle("");
       setDescription("");
-      setSelectStartDate(Date);
-      setSelectEndDate(Date);
+    }
+    if (isOpen) {
+      setSelectStartDate(new Date());
+      setSelectEndDate(new Date());
     }
   }, [isOpen]);
 
   const handleMeetingModal = (id) => {
     setCaseId(id);
-    if (meetingStatus === false) {
-      setIsOpen(true);
-    } else {
-      toast.success("Link Copied!");
-    }
+    setIsOpen(true);
   };
 
   function getformayyeddatetime(dates) {
@@ -93,16 +91,36 @@ const ArbitratorCases = () => {
   const handleScheduleFunc = () => {
     const startdate = getformayyeddatetime(selectStartDate);
     const enddate = getformayyeddatetime(selectEndDate);
-    console.log("start", startdate);
-    console.log("end", enddate);
-    // setIsOpen(true);
-    setTitle("");
-    setDescription("");
-    setSelectStartDate(Date);
-    setSelectEndDate(Date);
-    setIsOpen(false);
-    setCaseId("");
+    let obj = {
+      caseId: caseId,
+      title: title,
+      description: description,
+      startTime: startdate,
+      endTime: enddate,
+    };
+    axios
+      .post("http://localhost:3000/meeting", obj)
+      .then((res) => {
+        toast.success("Meeting Scheduled successfully");
+        setTitle("");
+        setDescription("");
+        setSelectStartDate(Date);
+        setSelectEndDate(Date);
+        setIsOpen(false);
+        setCaseId("");
+        getArbitratorCaseData();
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Something went wrong");
+      });
   };
+
+  function handleMeeting(meet) {
+    // console.log(meet)
+    // console.log(link)
+    window.open(meet[meet.length - 1], "_blank");
+  }
 
   return (
     <div>
@@ -146,19 +164,16 @@ const ArbitratorCases = () => {
                     fontSize: "24px",
                     cursor: "pointer",
                   }}
-                  onClick={() => handleMeetingModal(clientcase._id)}
                 >
-                  {!meetingStatus ? (
-                    <FcVideoCall />
+                  {/* {clientcase?.meetLinks.length>0? "Start meeting" : "Schedule meeting"} */}
+                  {!clientcase.meetLinks.length > 0 ? (
+                    <FcVideoCall
+                      onClick={() => handleMeetingModal(clientcase._id)}
+                    />
                   ) : (
-                    <HoverCard>
-                      <HoverCardTrigger>
-                        <FcStart />
-                      </HoverCardTrigger>
-                      <HoverCardContent className="text-sm">
-                        Start Meeting
-                      </HoverCardContent>
-                    </HoverCard>
+                    <FcStart
+                      onClick={() => handleMeeting(clientcase.meetLinks)}
+                    />
                   )}
                 </td>
               </tr>

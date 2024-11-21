@@ -2,13 +2,15 @@ require("dotenv").config();
 const { default: axios } = require("axios");
 const { CASEDATA } = require("../model/caseData.model");
 const { saveTheLink } = require("../services/savelink");
+const {
+  senEmailwithLinkandTime,
+} = require("../services/senEmailwithLinkandTime");
 
 const createMeetings = async (req, res) => {
   const { caseId, startTime, endTime, title, description } = req.body;
   try {
     const cases = await CASEDATA.findById(caseId);
     let token = process.env.WEBEX_TOKEN;
-    console.log(cases.arbitratorEmail);
     axios
       .post(
         "https://webexapis.com/v1/meetings",
@@ -43,7 +45,13 @@ const createMeetings = async (req, res) => {
         }
       )
       .then((response) => {
-        saveTheLink(response.data.webLink, caseId);
+        saveTheLink(response.data.webLink,response.data.id, caseId);
+        senEmailwithLinkandTime(
+          cases,
+          response.data.webLink,
+          startTime,
+          endTime
+        );
         res.status(200).json({
           message: "Meeting created successfully",
           data: response.data,
