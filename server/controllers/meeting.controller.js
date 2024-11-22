@@ -15,7 +15,7 @@ const createMeetings = async (req, res) => {
       .post(
         "https://webexapis.com/v1/meetings",
         {
-          meetingType: "personal",
+          meetingType: "meetingSeries",
           title,
           agenda: description,
           start: startTime,
@@ -27,13 +27,15 @@ const createMeetings = async (req, res) => {
           automaticLockMinutes: 0,
           allowAnyUserToBeCoHost: false,
           allowFirstUserToBeCoHost: false,
-          hostEmail: "vikram0104irctc@gmail.com",
+          hostEmail: "vikram.choudhary@recqarz.com",
           enabledBreakoutSessions: true,
           timezone: "Asia/Kolkata",
+          recordingEnabled: true,
+          autoRecordType: "local",
           attendees: [
             {
               email: cases.arbitratorEmail,
-              role: "prsenter",
+              role: "coHost",
             },
           ],
         },
@@ -45,7 +47,7 @@ const createMeetings = async (req, res) => {
         }
       )
       .then((response) => {
-        saveTheLink(response.data.webLink,response.data.id, caseId);
+        saveTheLink(response.data.webLink, response.data.id, caseId);
         senEmailwithLinkandTime(
           cases,
           response.data.webLink,
@@ -65,4 +67,29 @@ const createMeetings = async (req, res) => {
   }
 };
 
-module.exports = { createMeetings };
+const getRecordings = async (req, res) => {
+  try {
+    let token = process.env.WEBEX_TOKEN;
+    axios
+      .get("https://webexapis.com/v1/recordings", {
+        headers: {
+          ContentType: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        res.status(200).json({
+          message: "Meet Recordings",
+          data: response.data,
+        });
+      })
+      .catch((error) => {
+        res.status(500).json({ message: "Internal Server Error" });
+      });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { createMeetings, getRecordings };
