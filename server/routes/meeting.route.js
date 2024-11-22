@@ -1,9 +1,9 @@
-const { createMeetings } = require("../controllers/meeting.controller");
+const { createMeetings, getRecordings } = require("../controllers/meeting.controller");
 
 const meetingRoute = require("express").Router();
 
 meetingRoute.post("/", createMeetings);
 
-// meetingRoute.post("/join", joinMeetings);
+meetingRoute.get("/recording", getRecordings);
 
 module.exports = { meetingRoute };

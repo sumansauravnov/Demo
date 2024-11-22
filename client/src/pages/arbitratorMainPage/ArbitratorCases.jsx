@@ -44,7 +44,7 @@ const ArbitratorCases = () => {
     axios
       .get("http://localhost:3000/uploadcasedata/arbitratorcases", {
         headers: {
-          token: token, 
+          token: token,
         },
       })
       .then((res) => {
@@ -108,7 +108,9 @@ const ArbitratorCases = () => {
         setSelectEndDate(Date);
         setIsOpen(false);
         setCaseId("");
-        getArbitratorCaseData();
+        setTimeout(() => {
+          getArbitratorCaseData();
+        }, 2000);
       })
       .catch((err) => {
         console.log(err);

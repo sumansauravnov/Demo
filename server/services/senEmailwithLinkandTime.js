@@ -158,7 +158,7 @@ const senEmailwithLinkandTime = async (cases, link, startTime, endTime) => {
             </div>
           `,
     };
-    await transporter.sendMail(clientmailOptions);
+    await transporter.sendMail(arbitratormailOptions);
     return "Email sent successfully";
   } catch (err) {
     console.error(err);
