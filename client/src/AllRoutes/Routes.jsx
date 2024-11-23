@@ -13,6 +13,7 @@ import ArbitratorMain from "@/pages/arbitratorMainPage/ArbitratorMain";
 import ArbitratorCases from "@/pages/arbitratorMainPage/ArbitratorCases";
 import ClientCases from "@/pages/clinetMainPage/ClientCases";
 import ClientMain from "@/pages/clinetMainPage/ClientMain";
+import AllArbitrator from "@/pages/clinetMainPage/AllArbitrator";
 
 const Allroutes = () => {
   return (
@@ -24,6 +25,8 @@ const Allroutes = () => {
         <Routes>
           <Route path="/client" element={<ClientMain />} />
           <Route path="/client/cases" element={<ClientCases />} />
+          <Route path="/client/allarbitrator" element={<AllArbitrator />} />
+
           <Route path="/arbitrator" element={<ArbitratorMain />} />
           <Route path="/arbitrator/cases" element={<ArbitratorCases />} />
           <Route path="/admin" element={<AdminDashboard />} />

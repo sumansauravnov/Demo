@@ -21,6 +21,19 @@ const Sidebar = () => {
     }
   };
 
+const handleLogoutFunc=()=>{
+  console.log("logout");
+  localStorage.removeItem("rechtechrole");
+  localStorage.removeItem("rechtechtoken");
+  localStorage.removeItem("token");
+  navigate("/");
+}
+
+const AllArbitratorfunc=()=>{
+  navigate("/client/allarbitrator");
+}
+
+
   return (
     <>
       {/* Hamburger Menu Button - Only visible on medium and small screens */}
@@ -76,6 +89,18 @@ const Sidebar = () => {
                     </div>
                   </li>
                 ) : null}
+                {
+                  role==="client"?
+                  <li
+                    className="flex items-center justify-between px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-lg cursor-pointer transition-colors"
+                   
+                  >
+                    <div className="flex items-center" onClick={AllArbitratorfunc}>
+                      <span className="mr-3">👥</span>
+                      All Arbitrator
+                    </div>
+                  </li>:null
+                }
 
                 {isUsersOpen && (
                   <div className="ml-8 space-y-1">
@@ -128,7 +153,7 @@ const Sidebar = () => {
                   <span className="mr-3">⚙️</span>
                   Settings
                 </li>
-                <li className="flex items-center px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                <li className="flex items-center px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer" onClick={handleLogoutFunc}>
                   <span className="mr-3">🚪</span>
                   Log out
                 </li>

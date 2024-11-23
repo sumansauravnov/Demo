@@ -35,6 +35,11 @@ import toast from "react-hot-toast";
 const ArbitratorDashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [editData, setEditData] = useState(null);
+  const [data, setData] = useState([]);
+  const [searchdata, setSearchdata] = useState("");
+  const [filterstatus, setFilterstatus] = useState("all");
+  const [isStatusOpen, setIsStatusOpen] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState("Status");
 
   const handleOpen = (arbitratior) => {
     setIsOpen(true);
@@ -53,11 +58,7 @@ const ArbitratorDashboard = () => {
       });
     // setIsOpen(false);
   };
-  const [data, setData] = useState([]);
-  const [searchdata, setSearchdata] = useState("");
-  const [filterstatus, setFilterstatus] = useState("all");
-  const [isStatusOpen, setIsStatusOpen] = useState(false);
-  const [selectedStatus, setSelectedStatus] = useState("Status");
+ 
 
   const statusOptions = [
     { value: "all", label: "All" },
