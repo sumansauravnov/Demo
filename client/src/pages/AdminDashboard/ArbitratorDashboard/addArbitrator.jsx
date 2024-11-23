@@ -76,22 +76,24 @@ const AddArbitrator = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(formData.experties)
     const obj = {
       name: formData.name,
       contactNo: formData.contact,
       emailId: formData.email,
-      areaOfExpertise: formData.experties.join(","),
+      areaOfExperties: formData.experties.join(","),
       experienceInYears: parseInt(formData.experience),
       about: formData.about,
       role: "arbitrator",
       uid: formData.uid,
     };
+    console.log(obj)
 
     if (
       !obj.name ||
       !obj.emailId ||
       !obj.contactNo ||
-      !obj.areaOfExpertise ||
+      !obj.areaOfExperties ||
       !obj.experienceInYears ||
       !obj.about
     ) {

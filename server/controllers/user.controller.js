@@ -3,10 +3,12 @@ const jwt = require("jsonwebtoken");
 const { USER } = require("../model/user.model");
 
 const handleAuthSignup = async (req, res) => {
-  let password = req.body.password
+  let {password} = req.body;
   if (!password) {
-    password = "password@123"
+    password = `Abc@111${Math.floor(Math.random().toString())}`;
+    // password = "password@123";
   }
+  console.log(password);
   const {
     name,
     contactNo,
@@ -17,6 +19,7 @@ const handleAuthSignup = async (req, res) => {
     about,
     uid
   } = req.body;
+  console.log(areaOfExperties);
   try {
     const hash = await argon2.hash(password);
     if (!hash) {

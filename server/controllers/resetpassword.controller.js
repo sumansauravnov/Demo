@@ -30,35 +30,24 @@ const userExists = async (req, res) => {
         address: process.env.GMAIL_APP_ID,
       },
       to: [emailId],
-      subject: "Rechtech: Password Reset Request",
+      subject: "Your Password Reset OTP",
       html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;">
-          <div style="background-color: #4CAF50; color: white; padding: 20px; text-align: center;">
-            <h1 style="margin: 0;">Rechtech</h1>
-            <p style="margin: 0;">Secure Your Account</p>
-          </div>
-          <div style="padding: 20px;">
-            <p style="font-size: 16px; color: #333;">Hi,</p>
-            <p style="font-size: 16px; color: #333;">
-              You've recently made a request to reset your password on the Rechtech Platform. 
-              Please use the OTP below to reset your password. If you didn't request this, please ignore this email.
-            </p>
-            <div style="text-align: center; margin: 20px 0;">
-              <h2 style="font-size: 24px; color: #4CAF50; margin: 0;">${otp}</h2>
-            </div>
-            <p style="font-size: 14px; color: #666;">
-              This OTP will expire in 10 minutes. Do not share this OTP with anyone.
-            </p>
-          </div>
-          <div style="background-color: #f4f4f4; padding: 10px; text-align: center;">
-            <p style="font-size: 12px; color: #999; margin: 0;">
-              Need help? Contact us at <a href="mailto:support@rechtech.com" style="color: #4CAF50;">support@rechtech.com</a>.
-            </p>
-            <p style="font-size: 12px; color: #999; margin: 0;">
-              © 2024 Rechtech. All rights reserved.
-            </p>
-          </div>
-        </div>
+      <div style="font-family: Arial, sans-serif; background: #f4f7fc; padding: 30px; line-height: 1.6; color: #333;">
+      <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); overflow: hidden;">
+      <header style="background: #0275d8; color: #fff; padding: 20px; text-align: center;">
+      <h2 style="margin-left: 20px; font-size: 24px; margin-top:10px;">Hi ${user.name},</h2>
+      </header>
+      <div style="padding: 20px;">
+      <p style="font-size: 16px; color: #555;">Your OTP to reset your password is: ${otp}</p>
+      <p style="font-size: 16px; color: #555;">Please enter this code to proceed with resetting your password.</p>
+      <footer style=" margin: 0; font-size: 16px; text-align: center; padding : 10px;">
+      <h2 style="margin: 0; font-size: 16px; color: #555; font-weight: bold; font-style: italic }">
+      Best regards,
+      </h2>
+      <p style="margin: 0; font-size: 14px; color: #999;">
+       Team RecQarz
+      </p>
+      </footer>
       `,
     };
 
