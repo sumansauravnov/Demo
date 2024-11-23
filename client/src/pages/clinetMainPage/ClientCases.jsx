@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../AdminDashboard/ArbitratorDashboard/ArbitratorDashboard.module.css";
 import { FcVideoCall } from "react-icons/fc";
+import NoDataFound from "@/components/NoDataFound";
 
 const ClientCases = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const ClientCases = () => {
       })
       .then((res) => {
         setClientOwnData(res.data.caseData);
+        console.log("arbitrator",res.data.caseData)
       })
       .catch((err) => {
         toast.error("Something went wrong!");
@@ -31,13 +33,14 @@ const ClientCases = () => {
   return (
     <div>
       <div className="w-[90%] mx-auto mt-16">
-        <table cellSpacing="0">
+        {clientOwnData.length>0?<table cellSpacing="0">
           <thead>
             <tr>
               <th>Name</th>
               <th>Email ID</th>
               <th>File Name</th>
               <th>Uploaded Date</th>
+              <th>Arbitrator</th>
               <th>Meeting Status</th>
             </tr>
           </thead>
@@ -64,13 +67,25 @@ const ClientCases = () => {
                 </td>
 
                 <td data-label="No. of assign Case">
-                 Not Scheduled
+                  {clientcase.arbitrator?clientcase.arbitrator.split(" ")[0]:"Not assgn"}
+                </td>
+                <td>
+                {
+                  clientcase.meetLinks.length>0 ? "Scheduled" : "Not schedule"
+                }
                 </td>
               </tr>
             </tbody>
           ))}
-        </table>
+        </table>:<NoDataFound/>}
       </div>
+
+
+
+
+
+
+
     </div>
   );
 };

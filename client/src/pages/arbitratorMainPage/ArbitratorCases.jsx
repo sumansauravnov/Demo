@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { FcStart, FcVideoCall } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
-import { FaCopy } from "react-icons/fa";
+import { CgRecord } from "react-icons/cg";
 import {
   Dialog,
   DialogContent,
@@ -13,11 +13,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -104,8 +99,8 @@ const ArbitratorCases = () => {
         toast.success("Meeting Scheduled successfully");
         setTitle("");
         setDescription("");
-        setSelectStartDate(Date);
-        setSelectEndDate(Date);
+        setSelectStartDate(new Date());
+        setSelectEndDate(new Date());
         setIsOpen(false);
         setCaseId("");
         setTimeout(() => {
@@ -123,6 +118,14 @@ const ArbitratorCases = () => {
     // console.log(link)
     window.open(meet[meet.length - 1], "_blank");
   }
+
+  // :clientcase.meetLinks.length > 0 && selectEndDate < new Date()? (
+  //   <CgRecord
+  //   />
+  // )
+
+
+
 
   return (
     <div>
@@ -172,7 +175,7 @@ const ArbitratorCases = () => {
                     <FcVideoCall
                       onClick={() => handleMeetingModal(clientcase._id)}
                     />
-                  ) : (
+                  ):(
                     <FcStart
                       onClick={() => handleMeeting(clientcase.meetLinks)}
                     />
